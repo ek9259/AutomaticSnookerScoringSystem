@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:vm="clr-namespace:SnookerScoringSystem.ViewModels"
+             xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+             x:Class="SnookerScoringSystem.Views.LiveScoringPage"
+             x:DataType="vm:LiveScoringPageViewModel"
+             Title="Snooker Scoring System">
+
+    <Grid BackgroundColor="Transparent"
+          ColumnDefinitions="3.7*, 0.05*, 1.25*">
+
+        <!-- Video Panel -->
+        <Grid Grid.Column="0"
+              RowDefinitions="*, Auto, *">
+
+            <!-- Video Player -->
+            <toolkit:MediaElement Grid.RowSpan="3" 
+                                  ShouldAutoPlay="True" 
+                                  ShouldShowPlaybackControls="False"/>
+
+            <!-- Button in the middle -->
+            <Button  Grid.Row="1" 
+                     Text="Process Video" 
+                     HorizontalOptions="Center" 
+                     VerticalOptions="Center" 
+                     BorderColor="Blue" BorderWidth="0.5"/>
+        </Grid>
+
+        <!-- Vertical line -->
+        <BoxView 
+            Grid.Column="1" 
+            BackgroundColor="Black" 
+            WidthRequest="0.5"/>
+
+
+        <!-- Scoring Panel -->
+        <!-- Background Image -->
+        <Image 
+            Grid.Column="2" 
+            Source="snookerbackground.jpg" 
+            Aspect="AspectFill"/>
+
+        <!-- Dimmed Overlay -->
+        <BoxView Grid.Column="2" 
+                 Color="#C0000000"/>
+
+        <StackLayout Grid.Column="2" Spacing="25" VerticalOptions="CenterAndExpand">
+            <Label Text="{Binding Player1.Name}" FontSize="Large" HorizontalOptions="CenterAndExpand"/>
+            <Label Text="{Binding Player1.Score}" FontSize="Medium" HorizontalOptions="CenterAndExpand"/>
+            <Label Text="VS." FontSize="Medium" HorizontalOptions="CenterAndExpand"/>
+            <Label Text="{Binding Player2.Name}" FontSize="Large" HorizontalOptions="CenterAndExpand"/>
+            <Label Text="{Binding Player2.Score}" FontSize="Medium" HorizontalOptions="CenterAndExpand"/>
+        </StackLayout>
+        
+    </Grid>
+
+    
+</ContentPage>

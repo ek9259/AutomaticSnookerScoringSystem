@@ -3,17 +3,17 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.9.34616.47
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SnookerScoringSystem", "SnookerScoringSystem\SnookerScoringSystem.csproj", "{29A3BC3F-714C-42F4-A04F-5C4EFDB065D7}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SnookerScoringSystem", "SnookerScoringSystem\SnookerScoringSystem.csproj", "{29A3BC3F-714C-42F4-A04F-5C4EFDB065D7}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SnookerScoringSystem.Domain", "SnookerScoringSystem.Domain\SnookerScoringSystem.Domain.csproj", "{A086AF3D-3B8C-4BD8-BFA7-7FD30AD25CE7}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SnookerScoringSystem.Domain", "SnookerScoringSystem.Domain\SnookerScoringSystem.Domain.csproj", "{A086AF3D-3B8C-4BD8-BFA7-7FD30AD25CE7}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SnookerScoringSystem.UseCases", "SnookerScoringSystem.UseCases\SnookerScoringSystem.UseCases.csproj", "{30799974-FE1D-4DFC-91AF-B78E83882F37}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SnookerScoringSystem.WebAPI", "SnookerScoringSystem.WebAPI\SnookerScoringSystem.WebAPI.csproj", "{881DE3F5-1346-4A4E-9A55-307FE9F6548A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SnookerScoringSystem.UseCases", "SnookerScoringSystem.UseCases\SnookerScoringSystem.UseCases.csproj", "{30799974-FE1D-4DFC-91AF-B78E83882F37}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Plugins", "Plugins", "{AF47154F-EBE6-4B7B-ADEA-A6503310C6A8}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SnookerScoringSystem.Plugins.Datastore.WebAPI", "SnookerScoringSystem.Plugins.Datastore.WebAPI\SnookerScoringSystem.Plugins.Datastore.WebAPI.csproj", "{B234FD5C-F49C-430B-92D7-04500B585250}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SnookerScoringSystem.Plugins.Datastore.WebAPI", "SnookerScoringSystem.Plugins.Datastore.WebAPI\SnookerScoringSystem.Plugins.Datastore.WebAPI.csproj", "{B234FD5C-F49C-430B-92D7-04500B585250}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SnookerScoringSystem.Plugins.Datastore.InMemory", "SnookerScoringSystem.Plugins.Datastore.InMemory\SnookerScoringSystem.Plugins.Datastore.InMemory.csproj", "{08F2F80A-2120-4AC5-8529-F434239AD104}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -35,20 +35,21 @@ Global
 		{30799974-FE1D-4DFC-91AF-B78E83882F37}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{30799974-FE1D-4DFC-91AF-B78E83882F37}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{30799974-FE1D-4DFC-91AF-B78E83882F37}.Release|Any CPU.Build.0 = Release|Any CPU
-		{881DE3F5-1346-4A4E-9A55-307FE9F6548A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{881DE3F5-1346-4A4E-9A55-307FE9F6548A}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{881DE3F5-1346-4A4E-9A55-307FE9F6548A}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{881DE3F5-1346-4A4E-9A55-307FE9F6548A}.Release|Any CPU.Build.0 = Release|Any CPU
 		{B234FD5C-F49C-430B-92D7-04500B585250}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{B234FD5C-F49C-430B-92D7-04500B585250}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B234FD5C-F49C-430B-92D7-04500B585250}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B234FD5C-F49C-430B-92D7-04500B585250}.Release|Any CPU.Build.0 = Release|Any CPU
+		{08F2F80A-2120-4AC5-8529-F434239AD104}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{08F2F80A-2120-4AC5-8529-F434239AD104}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{08F2F80A-2120-4AC5-8529-F434239AD104}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{08F2F80A-2120-4AC5-8529-F434239AD104}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{B234FD5C-F49C-430B-92D7-04500B585250} = {AF47154F-EBE6-4B7B-ADEA-A6503310C6A8}
+		{08F2F80A-2120-4AC5-8529-F434239AD104} = {AF47154F-EBE6-4B7B-ADEA-A6503310C6A8}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {8BB2DA6B-CCEE-4E45-B695-B5C6CEB6684D}

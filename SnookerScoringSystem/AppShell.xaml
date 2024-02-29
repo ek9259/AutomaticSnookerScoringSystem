@@ -4,12 +4,13 @@
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:local="clr-namespace:SnookerScoringSystem"
+    xmlns:views="clr-namespace:SnookerScoringSystem.Views"
     Shell.FlyoutBehavior="Disabled"
     Title="SnookerScoringSystem">
 
     <ShellContent
-        Title="Home"
-        ContentTemplate="{DataTemplate local:MainPage}"
-        Route="MainPage" />
+        Title="Welcome"
+        ContentTemplate="{DataTemplate views:PlayerSetUpPage}"
+        Route="PlayerSetUpPage" />
 
 </Shell>

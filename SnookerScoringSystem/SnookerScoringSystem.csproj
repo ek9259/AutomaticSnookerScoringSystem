@@ -57,14 +57,32 @@
 	</ItemGroup>
 
 	<ItemGroup>
+		<PackageReference Include="CommunityToolkit.Maui.MediaElement" Version="3.0.1" />
+		<PackageReference Include="CommunityToolkit.Mvvm" Version="8.2.2" />
 		<PackageReference Include="Microsoft.Maui.Controls" Version="$(MauiVersion)" />
 		<PackageReference Include="Microsoft.Maui.Controls.Compatibility" Version="$(MauiVersion)" />
 		<PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="8.0.0" />
 	</ItemGroup>
 
 	<ItemGroup>
-	  <Folder Include="ViewModels\" />
-	  <Folder Include="Views\" />
+	  <ProjectReference Include="..\SnookerScoringSystem.Domain\SnookerScoringSystem.Domain.csproj" />
+	  <ProjectReference Include="..\SnookerScoringSystem.Plugins.Datastore.InMemory\SnookerScoringSystem.Plugins.Datastore.InMemory.csproj" />
+	  <ProjectReference Include="..\SnookerScoringSystem.UseCases\SnookerScoringSystem.UseCases.csproj" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <Compile Update="Views\PlayerSetUpPage.xaml.cs">
+	    <DependentUpon>PlayerSetUpPage.xaml</DependentUpon>
+	  </Compile>
+	</ItemGroup>
+
+	<ItemGroup>
+	  <MauiXaml Update="Views\LiveScoringPage.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Views\PlayerSetUpPage.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
 	</ItemGroup>
 
 </Project>
