@@ -26,11 +26,12 @@ namespace SnookerScoringSystem
 #if DEBUG
     		builder.Logging.AddDebug();
 #endif
+            // Registering the necessary services with the dependency injection container.
             builder.Services.AddSingleton<IPlayerRepository, PlayerInMemoryRepository>();
             builder.Services.AddTransient<IAddPlayerUseCase, AddPlayerUseCase>();
             builder.Services.AddTransient<IGetPlayerUseCase, GetPlayerUseCase>();
 
-
+            // Registering the view models and views with the dependency injection container.
             builder.Services.AddSingleton<PlayerSetUpPageViewModel>();
             builder.Services.AddSingleton<LiveScoringPageViewModel>();
 

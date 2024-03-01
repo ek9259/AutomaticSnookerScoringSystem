@@ -11,8 +11,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SnookerScoringSystem.UseCas
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Plugins", "Plugins", "{AF47154F-EBE6-4B7B-ADEA-A6503310C6A8}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SnookerScoringSystem.Plugins.Datastore.WebAPI", "SnookerScoringSystem.Plugins.Datastore.WebAPI\SnookerScoringSystem.Plugins.Datastore.WebAPI.csproj", "{B234FD5C-F49C-430B-92D7-04500B585250}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SnookerScoringSystem.Plugins.Datastore.InMemory", "SnookerScoringSystem.Plugins.Datastore.InMemory\SnookerScoringSystem.Plugins.Datastore.InMemory.csproj", "{08F2F80A-2120-4AC5-8529-F434239AD104}"
 EndProject
 Global
@@ -35,10 +33,6 @@ Global
 		{30799974-FE1D-4DFC-91AF-B78E83882F37}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{30799974-FE1D-4DFC-91AF-B78E83882F37}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{30799974-FE1D-4DFC-91AF-B78E83882F37}.Release|Any CPU.Build.0 = Release|Any CPU
-		{B234FD5C-F49C-430B-92D7-04500B585250}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{B234FD5C-F49C-430B-92D7-04500B585250}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{B234FD5C-F49C-430B-92D7-04500B585250}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{B234FD5C-F49C-430B-92D7-04500B585250}.Release|Any CPU.Build.0 = Release|Any CPU
 		{08F2F80A-2120-4AC5-8529-F434239AD104}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{08F2F80A-2120-4AC5-8529-F434239AD104}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{08F2F80A-2120-4AC5-8529-F434239AD104}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -48,7 +42,6 @@ Global
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
-		{B234FD5C-F49C-430B-92D7-04500B585250} = {AF47154F-EBE6-4B7B-ADEA-A6503310C6A8}
 		{08F2F80A-2120-4AC5-8529-F434239AD104} = {AF47154F-EBE6-4B7B-ADEA-A6503310C6A8}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
