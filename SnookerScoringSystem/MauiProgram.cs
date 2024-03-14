@@ -6,6 +6,7 @@ using SnookerScoringSystem.UseCases;
 using SnookerScoringSystem.UseCases.Interfaces;
 using SnookerScoringSystem.ViewModels;
 using CommunityToolkit.Maui;
+using UraniumUI;
 
 namespace SnookerScoringSystem
 {
@@ -17,6 +18,8 @@ namespace SnookerScoringSystem
             builder
                 .UseMauiApp<App>()
                 .UseMauiCommunityToolkitMediaElement()
+                .UseUraniumUI()
+                .UseUraniumUIMaterial()
                 .ConfigureFonts(fonts =>
                 {
                     fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");
@@ -28,6 +31,7 @@ namespace SnookerScoringSystem
 #endif
             // Registering the necessary services with the dependency injection container.
             builder.Services.AddSingleton<IPlayerRepository, PlayerInMemoryRepository>();
+            //builder.Services.AddSingleton<ISnookerDetectionModelRepository, SnookerDetectionModelRepository>();
             builder.Services.AddTransient<IAddPlayerUseCase, AddPlayerUseCase>();
             builder.Services.AddTransient<IGetPlayerUseCase, GetPlayerUseCase>();
 

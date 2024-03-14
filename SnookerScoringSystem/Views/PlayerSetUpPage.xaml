@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="utf-8" ?>
-<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+<uranium:UraniumContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:vm="clr-namespace:SnookerScoringSystem.ViewModels"
+             xmlns:material="http://schemas.enisn-projects.io/dotnet/maui/uraniumui/material"
+             xmlns:uranium="http://schemas.enisn-projects.io/dotnet/maui/uraniumui"
              x:Class="SnookerScoringSystem.Views.PlayerSetUpPage"
              x:DataType="vm:PlayerSetUpPageViewModel"
              BackgroundColor="Transparent"
@@ -36,7 +38,8 @@
                     MinimumWidthRequest="100"
                     Text="{Binding Player2.Name, Mode=TwoWay}"
                     Placeholder="Player 2's nickname"></Entry>
-                <Button 
+                <Button
+                    StyleClass="OutlinedButton"
                     Text="Save" 
                     VerticalOptions="End"
                     Command="{Binding AddPlayerCommand}"></Button>
@@ -44,4 +47,4 @@
         </Frame>
 
     </Grid>
-</ContentPage>
+</uranium:UraniumContentPage>
