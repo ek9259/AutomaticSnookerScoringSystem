@@ -40,7 +40,7 @@
                     Placeholder="Player 2's nickname"></Entry>
                 <Button
                     StyleClass="OutlinedButton"
-                    Text="Save" 
+                    Text="Next" 
                     VerticalOptions="End"
                     Command="{Binding AddPlayerCommand}"></Button>
             </VerticalStackLayout>

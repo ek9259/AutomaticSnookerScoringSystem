@@ -1,14 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using SnookerScoringSystem.Domain;
 
 namespace SnookerScoringSystem.UseCases.PluginInterfaces
 {
     public interface ISnookerDetectionModelRepository
     {
-        Task DetectSnookerBallAsync(string framePath);
+        Task<List<DetectedBall>> DetectSnookerBallAsync(string framePath);
 
     }
 }
