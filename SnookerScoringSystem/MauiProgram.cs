@@ -2,6 +2,8 @@
 using SnookerScoringSystem.UseCases.PluginInterfaces;
 using SnookerScoringSystem.Views;
 using SnookerScoringSystem.Plugins.Datastore.InMemory;
+using SnookerScoringSystem.Plugins.Datastore.Model;
+using SnookerScoringSystem.Plugins.Datastore.VideoProcessing;
 using SnookerScoringSystem.UseCases;
 using SnookerScoringSystem.UseCases.Interfaces;
 using SnookerScoringSystem.ViewModels;
@@ -31,9 +33,12 @@ namespace SnookerScoringSystem
 #endif
             // Registering the necessary services with the dependency injection container.
             builder.Services.AddSingleton<IPlayerRepository, PlayerInMemoryRepository>();
-            //builder.Services.AddSingleton<ISnookerDetectionModelRepository, SnookerDetectionModelRepository>();
+            builder.Services.AddSingleton<ISnookerDetectionModelRepository, ModelRepository>();
+            builder.Services.AddSingleton<IVideoProcessingRepository, VideoProcessingRepository>();
             builder.Services.AddTransient<IAddPlayerUseCase, AddPlayerUseCase>();
             builder.Services.AddTransient<IGetPlayerUseCase, GetPlayerUseCase>();
+            builder.Services.AddTransient<IDetectSnookerBallUseCase, DetectSnookerBallUseCase>();
+            builder.Services.AddTransient<IExtractFrameUseCase, ExtractFrameUseCase>();
 
             // Registering the view models and views with the dependency injection container.
             builder.Services.AddSingleton<PlayerSetUpPageViewModel>();

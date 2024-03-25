@@ -1,0 +1,7 @@
+﻿namespace SnookerScoringSystem.UseCases.PluginInterfaces
+{
+    public interface IVideoProcessingRepository
+    {
+        Task ExtractFrameAsync();
+    }
+}
