@@ -2,6 +2,7 @@
 using Compunet.YoloV8;
 using Compunet.YoloV8.Data;
 using SnookerScoringSystem.UseCases.PluginInterfaces;
+using System.Diagnostics;
 
 namespace SnookerScoringSystem.Plugins.Datastore.Model
 {
@@ -59,6 +60,7 @@ namespace SnookerScoringSystem.Plugins.Datastore.Model
 
             try
             {
+                var stopwatch = Stopwatch.StartNew();
                 var results = await _predictor.DetectAsync(framePath);
                 var detectedBalls = new List<DetectedBall>();
 
@@ -70,6 +72,10 @@ namespace SnookerScoringSystem.Plugins.Datastore.Model
                         X1 = result.Bounds.X
                     });
                 }
+
+                stopwatch.Stop();
+                var elapsedTime = stopwatch.Elapsed;
+                
 
                 return detectedBalls;
             }

@@ -39,6 +39,7 @@ namespace SnookerScoringSystem.Plugins.Datastore.VideoProcessing
                     Mat frame = new Mat();
                     int frameCount = 0;
                     int fps = 60;
+                    int second = 1;
                     while (true)
                     {
                         _snookerVideo.Read(frame);
@@ -48,7 +49,7 @@ namespace SnookerScoringSystem.Plugins.Datastore.VideoProcessing
                             break;
                         }
 
-                        if (frameCount % fps == 0)
+                        if (frameCount % (fps * 1) == 0)
                         {
                             // Get the AppData directory path
                             string appDataDirectory = FileSystem.Current.AppDataDirectory;
@@ -63,10 +64,9 @@ namespace SnookerScoringSystem.Plugins.Datastore.VideoProcessing
                             //}
 
                             CvInvoke.Imwrite(filePath, frame);
+                            await Task.Delay(900);
                         }
                         frameCount++;
-
-                        await Task.Delay(50);
                     }
                 }
             });
