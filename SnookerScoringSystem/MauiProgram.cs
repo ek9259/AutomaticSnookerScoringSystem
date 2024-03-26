@@ -8,6 +8,7 @@ using SnookerScoringSystem.UseCases;
 using SnookerScoringSystem.UseCases.Interfaces;
 using SnookerScoringSystem.ViewModels;
 using CommunityToolkit.Maui;
+using SnookerScoringSystem.Plugins.Datastore.GamePlay;
 using UraniumUI;
 
 namespace SnookerScoringSystem
@@ -35,10 +36,12 @@ namespace SnookerScoringSystem
             builder.Services.AddSingleton<IPlayerRepository, PlayerInMemoryRepository>();
             builder.Services.AddSingleton<ISnookerDetectionModelRepository, ModelRepository>();
             builder.Services.AddSingleton<IVideoProcessingRepository, VideoProcessingRepository>();
+            builder.Services.AddSingleton<IGamePlayRepository, GamePlayRepository>();
             builder.Services.AddTransient<IAddPlayerUseCase, AddPlayerUseCase>();
             builder.Services.AddTransient<IGetPlayerUseCase, GetPlayerUseCase>();
             builder.Services.AddTransient<IDetectSnookerBallUseCase, DetectSnookerBallUseCase>();
             builder.Services.AddTransient<IExtractFrameUseCase, ExtractFrameUseCase>();
+            builder.Services.AddTransient<ICalculateScoreUseCase, CalculateScoreUseCase>();
 
             // Registering the view models and views with the dependency injection container.
             builder.Services.AddSingleton<PlayerSetUpPageViewModel>();

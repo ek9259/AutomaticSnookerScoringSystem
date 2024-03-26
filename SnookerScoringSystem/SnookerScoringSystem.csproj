@@ -72,6 +72,7 @@
 
 	<ItemGroup>
 	  <ProjectReference Include="..\SnookerScoringSystem.Domain\SnookerScoringSystem.Domain.csproj" />
+	  <ProjectReference Include="..\SnookerScoringSystem.Plugins.Datastore.GamePlay\SnookerScoringSystem.Plugins.Datastore.GamePlay.csproj" />
 	  <ProjectReference Include="..\SnookerScoringSystem.Plugins.Datastore.InMemory\SnookerScoringSystem.Plugins.Datastore.InMemory.csproj" />
 	  <ProjectReference Include="..\SnookerScoringSystem.Plugins.Datastore.Model\SnookerScoringSystem.Plugins.Datastore.Model.csproj" />
 	  <ProjectReference Include="..\SnookerScoringSystem.Plugins.Datastore.VideoProcessing\SnookerScoringSystem.Plugins.Datastore.VideoProcessing.csproj" />
