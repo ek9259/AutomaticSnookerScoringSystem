@@ -2,6 +2,7 @@
 using Compunet.YoloV8;
 using Compunet.YoloV8.Data;
 using SnookerScoringSystem.UseCases.PluginInterfaces;
+using System.Diagnostics;
 
 namespace SnookerScoringSystem.Plugins.Datastore.Model
 {
@@ -12,38 +13,34 @@ namespace SnookerScoringSystem.Plugins.Datastore.Model
         private readonly string _modelPath;
 
 
+        //Create yoloV8 predictor by passing the path to the model file. 
         public ModelRepository()
         {
             try
             {
-                _modelPath = Path.Combine(AppContext.BaseDirectory, "Models", "SnookerDetectionModel.onnx");
-
-                if (!File.Exists(_modelPath))
-                {
-                    throw new Exception("The model file cannot be found");
-                }
-
+                _modelPath = GetModelPath();
                 _predictor = YoloV8Predictor.Create(_modelPath );
             }
             catch (Exception ex)
             {
-                throw new Exception("An error occured while creating the object detection model");
+                throw new Exception($"An error occurred while creating the object detection model: {ex.Message}", ex);
             }
         }
 
-        private string extractBallColour(BoundingBox detectedBoundingBox)
+        //Find the path to model file
+        private string GetModelPath()
         {
-            string ballColor = "";
-            string ball = detectedBoundingBox.ToString().Trim('\"');
-            int commaIndex = ball.IndexOf(',');
-            if (commaIndex != -1)
+            var modelPath = Path.Combine(AppContext.BaseDirectory, "Models", "SnookerDetectionModel.onnx");
+
+            if (!File.Exists(modelPath))
             {
-                ballColor = ball.Substring(0, commaIndex);
+                throw new FileNotFoundException($"The model file cannot be found at path: {modelPath}");
             }
 
-            return ballColor;
+            return modelPath;
         }
 
+        //Ball detection function, pass an image to predictor
         public async Task<List<DetectedBall>> DetectSnookerBallAsync(string framePath)
         {
             if (string.IsNullOrWhiteSpace(framePath))
@@ -59,6 +56,7 @@ namespace SnookerScoringSystem.Plugins.Datastore.Model
 
             try
             {
+                var stopwatch = Stopwatch.StartNew();
                 var results = await _predictor.DetectAsync(framePath);
                 var detectedBalls = new List<DetectedBall>();
 
@@ -66,10 +64,18 @@ namespace SnookerScoringSystem.Plugins.Datastore.Model
                 {
                     detectedBalls.Add(new DetectedBall
                     {
-                        ClassName = extractBallColour(result),
-                        X1 = result.Bounds.X
+                        ClassId = result.Class.Id,
+                        ClassName = result.Class.Name.Replace(",", ""),
+                        X = result.Bounds.X,
+                        Y = result.Bounds.Y,
+                        Width = result.Bounds.Width,
+                        Height = result.Bounds.Height
                     });
                 }
+
+                stopwatch.Stop();
+                var elapsedTime = stopwatch.Elapsed;
+                
 
                 return detectedBalls;
             }

@@ -10,26 +10,36 @@ namespace SnookerScoringSystem.Plugins.Datastore.VideoProcessing
     {
         private readonly VideoCapture _snookerVideo;
         private readonly string _videoPath;
+
+        //Creating video capture object by passing the path to video
         public VideoProcessingRepository()
         {
             try
             {
                 // Get the path to the video file
-                _videoPath = Path.Combine(AppContext.BaseDirectory, "Videos", "Snooker_Video.mp4");
-
-                if (!File.Exists(_videoPath))
-                {
-                    throw new Exception($"File not found: {_videoPath}");
-                }
-
+                _videoPath = GetVideoPath();
                 _snookerVideo = new VideoCapture(_videoPath);
             }
             catch (Exception ex)
             {
-                throw new Exception("An error occurred while accessing the video", ex);
+                throw new Exception($"An error occurred while accessing teh video: {ex.Message}", ex);
             }
         }
 
+        //Find the path to video file
+        public string GetVideoPath()
+        {
+            var videoPath = Path.Combine(AppContext.BaseDirectory, "Videos", "Snooker_Video.mp4");
+
+            if (!File.Exists(videoPath))
+            {
+                throw new FileNotFoundException($"The video file cannot be found at path: {videoPath}");
+            }
+
+            return videoPath;
+    }
+
+        //Extract frame function
         public async Task ExtractFrameAsync()
         {
             await Task.Run(async () =>
@@ -38,7 +48,8 @@ namespace SnookerScoringSystem.Plugins.Datastore.VideoProcessing
                 {
                     Mat frame = new Mat();
                     int frameCount = 0;
-                    int fps = 60;
+                    int fps = 30;
+                    int second = 1;
                     while (true)
                     {
                         _snookerVideo.Read(frame);
@@ -56,20 +67,14 @@ namespace SnookerScoringSystem.Plugins.Datastore.VideoProcessing
                             // Create the full file path
                             string filePath = Path.Combine(appDataDirectory, "frame.jpg");
 
-                            //// If the file exists, delete it
-                            //if (File.Exists(filePath))
-                            //{
-                            //    File.Delete(filePath);
-                            //}
-
                             CvInvoke.Imwrite(filePath, frame);
+                            await Task.Delay(400);
                         }
                         frameCount++;
-
-                        await Task.Delay(50);
                     }
                 }
             });
         }
+
     }
 }

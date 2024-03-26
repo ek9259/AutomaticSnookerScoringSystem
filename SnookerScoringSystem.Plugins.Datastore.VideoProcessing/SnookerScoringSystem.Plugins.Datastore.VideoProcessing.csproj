@@ -20,7 +20,20 @@
 	</PropertyGroup>
 
 	<ItemGroup>
+	  <AndroidResource Remove="Extracted Frame\**" />
+	  <Compile Remove="Extracted Frame\**" />
+	  <EmbeddedResource Remove="Extracted Frame\**" />
+	  <MauiCss Remove="Extracted Frame\**" />
+	  <MauiXaml Remove="Extracted Frame\**" />
+	  <None Remove="Extracted Frame\**" />
+	</ItemGroup>
+
+	<ItemGroup>
 	  <None Remove="Videos\Snooker_Video.mp4" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <MauiAsset Include="Videos\Snooker_Video.mp4" />
 	</ItemGroup>
 
 	<ItemGroup>
@@ -30,14 +43,6 @@
 		<PackageReference Include="Microsoft.Maui.Controls" Version="$(MauiVersion)" />
 		<PackageReference Include="Microsoft.Maui.Controls.Compatibility" Version="$(MauiVersion)" />
 		<PackageReference Include="Microsoft.Maui.Essentials" Version="8.0.14" />
-	</ItemGroup>
-
-	<ItemGroup>
-	  <Folder Include="Extracted Frame\" />
-	</ItemGroup>
-
-	<ItemGroup>
-	  <MauiAsset Include="Videos\Snooker_Video.mp4" />
 	</ItemGroup>
 
 	<ItemGroup>

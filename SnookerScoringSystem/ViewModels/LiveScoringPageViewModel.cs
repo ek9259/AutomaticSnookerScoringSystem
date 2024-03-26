@@ -12,6 +12,7 @@ namespace SnookerScoringSystem.ViewModels
         private readonly IGetPlayerUseCase _getPlayerUseCase;
         private readonly IExtractFrameUseCase _extractFrameUseCase;
         private readonly IDetectSnookerBallUseCase _detectSnookerBallUseCase;
+        private readonly IGetVideoPathUseCase _getVideoPathUseCase;
 
         private FileSystemWatcher _fileWatcher;
         private List<DetectedBall> _detectedBalls;
@@ -29,13 +30,15 @@ namespace SnookerScoringSystem.ViewModels
         private string _videoSource;
 
 
-        public LiveScoringPageViewModel(IGetPlayerUseCase getPlayerUseCase, IExtractFrameUseCase extractFrameUseCase, IDetectSnookerBallUseCase detectSnookerBallUseCase)
+        public LiveScoringPageViewModel(IGetPlayerUseCase getPlayerUseCase, IExtractFrameUseCase extractFrameUseCase, 
+            IDetectSnookerBallUseCase detectSnookerBallUseCase, IGetVideoPathUseCase getVideoPathUseCase)
         {
             this._getPlayerUseCase = getPlayerUseCase;
             this._player1 = new Player();
             this._player2 = new Player();
             this._detectedBalls = new List<DetectedBall>();
 
+            this._getVideoPathUseCase = getVideoPathUseCase;
             this._extractFrameUseCase = extractFrameUseCase;
             this._detectSnookerBallUseCase = detectSnookerBallUseCase;
 
@@ -61,15 +64,7 @@ namespace SnookerScoringSystem.ViewModels
         {
             try
             {
-                // Get the path to the video file
-                string videoPath = Path.Combine(AppContext.BaseDirectory, "Videos", "Snooker_Video.mp4");
-
-                if (!File.Exists(videoPath))
-                {
-                    throw new Exception($"File not found: {videoPath}");
-                }
-
-                VideoSource = videoPath;
+                VideoSource = _getVideoPathUseCase.Execute();
             }
             catch (Exception ex)
             {

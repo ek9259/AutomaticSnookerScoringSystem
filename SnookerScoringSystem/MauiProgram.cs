@@ -42,6 +42,7 @@ namespace SnookerScoringSystem
             builder.Services.AddTransient<IDetectSnookerBallUseCase, DetectSnookerBallUseCase>();
             builder.Services.AddTransient<IExtractFrameUseCase, ExtractFrameUseCase>();
             builder.Services.AddTransient<ICalculateScoreUseCase, CalculateScoreUseCase>();
+            builder.Services.AddTransient<IGetVideoPathUseCase, GetVideoPathUseCase>();
 
             // Registering the view models and views with the dependency injection container.
             builder.Services.AddSingleton<PlayerSetUpPageViewModel>();

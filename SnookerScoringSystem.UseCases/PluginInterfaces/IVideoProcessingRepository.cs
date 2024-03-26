@@ -3,5 +3,6 @@
     public interface IVideoProcessingRepository
     {
         Task ExtractFrameAsync();
+        string GetVideoPath();
     }
 }
