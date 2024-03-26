@@ -17,6 +17,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SnookerScoringSystem.Plugin
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SnookerScoringSystem.Plugins.Datastore.VideoProcessing", "SnookerScoringSystem.Plugins.Datastore.VideoProcessing\SnookerScoringSystem.Plugins.Datastore.VideoProcessing.csproj", "{C049D51A-4BF8-4068-AEBE-3B3A8036C30A}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SnookerScoringSystem.Plugins.Datastore.GamePlay", "SnookerScoringSystem.Plugins.Datastore.GamePlay\SnookerScoringSystem.Plugins.Datastore.GamePlay.csproj", "{5E2A146A-29E8-4F91-BE2C-C0CB71109132}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -77,6 +79,14 @@ Global
 		{C049D51A-4BF8-4068-AEBE-3B3A8036C30A}.Release|Any CPU.Build.0 = Release|Any CPU
 		{C049D51A-4BF8-4068-AEBE-3B3A8036C30A}.Release|x64.ActiveCfg = Release|x64
 		{C049D51A-4BF8-4068-AEBE-3B3A8036C30A}.Release|x64.Build.0 = Release|x64
+		{5E2A146A-29E8-4F91-BE2C-C0CB71109132}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5E2A146A-29E8-4F91-BE2C-C0CB71109132}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5E2A146A-29E8-4F91-BE2C-C0CB71109132}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{5E2A146A-29E8-4F91-BE2C-C0CB71109132}.Debug|x64.Build.0 = Debug|Any CPU
+		{5E2A146A-29E8-4F91-BE2C-C0CB71109132}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5E2A146A-29E8-4F91-BE2C-C0CB71109132}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5E2A146A-29E8-4F91-BE2C-C0CB71109132}.Release|x64.ActiveCfg = Release|Any CPU
+		{5E2A146A-29E8-4F91-BE2C-C0CB71109132}.Release|x64.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -85,6 +95,7 @@ Global
 		{08F2F80A-2120-4AC5-8529-F434239AD104} = {AF47154F-EBE6-4B7B-ADEA-A6503310C6A8}
 		{9AFFA07C-A9C0-4D23-B38A-9CD5FEDF6FF1} = {AF47154F-EBE6-4B7B-ADEA-A6503310C6A8}
 		{C049D51A-4BF8-4068-AEBE-3B3A8036C30A} = {AF47154F-EBE6-4B7B-ADEA-A6503310C6A8}
+		{5E2A146A-29E8-4F91-BE2C-C0CB71109132} = {AF47154F-EBE6-4B7B-ADEA-A6503310C6A8}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {8BB2DA6B-CCEE-4E45-B695-B5C6CEB6684D}
