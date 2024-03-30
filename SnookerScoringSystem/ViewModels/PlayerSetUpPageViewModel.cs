@@ -1,36 +1,45 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using Mopups.Interfaces;
 using SnookerScoringSystem.Views;
 using SnookerScoringSystem.Domain;
 using SnookerScoringSystem.UseCases.Interfaces;
+using SnookerScoringSystem.Views.Popups;
 
 namespace SnookerScoringSystem.ViewModels
 {
     public partial class PlayerSetUpPageViewModel : ObservableObject
     {
+        private readonly IAddPlayerUseCase _addPlayerUseCase;
+        private readonly IPopupNavigation _popupNavigation;
+
         [ObservableProperty]
         private Player? _player1;
 
         [ObservableProperty]
         private Player? _player2;
 
-        private readonly IAddPlayerUseCase _addPlayerUseCase;
 
-
-        public PlayerSetUpPageViewModel(IAddPlayerUseCase addPlayerUseCase)
+        public PlayerSetUpPageViewModel(IAddPlayerUseCase addPlayerUseCase, IPopupNavigation popupNavigation)
         {
-            this.Player1 = new Player();
-            this.Player2 = new Player(); 
             this._addPlayerUseCase = addPlayerUseCase;
+            this._popupNavigation = popupNavigation;
         }
 
         [RelayCommand]
-        public async Task AddPlayer()
+        private async Task AddPlayer()
         {
             await this._addPlayerUseCase.ExecuteAsync(this.Player1);
             await this._addPlayerUseCase.ExecuteAsync(this.Player2);
 
+
             await Shell.Current.GoToAsync($"{nameof(LiveScoringPage)}");
+        }
+
+        public void ResetPlayers()
+        {
+            Player1 = new Player();
+            Player2 = new Player();
         }
     }
 }

@@ -1,9 +1,12 @@
-﻿using CommunityToolkit.Maui.Views;
-using CommunityToolkit.Mvvm.ComponentModel;
+﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using CommunityToolkit.Mvvm.Messaging;
+using Mopups.Interfaces;
 using SnookerScoringSystem.Domain;
+using SnookerScoringSystem.Domain.Messages;
 using SnookerScoringSystem.UseCases.Interfaces;
-using SnookerScoringSystem.Views;
+using SnookerScoringSystem.Views.Popups;
+using SnookerScoringSystem.Services.Intefaces;
 
 namespace SnookerScoringSystem.ViewModels
 {
@@ -13,6 +16,12 @@ namespace SnookerScoringSystem.ViewModels
         private readonly IExtractFrameUseCase _extractFrameUseCase;
         private readonly IDetectSnookerBallUseCase _detectSnookerBallUseCase;
         private readonly IGetVideoPathUseCase _getVideoPathUseCase;
+        private readonly IUpdatePlayerScoreUseCase _updatePlayerScoreUseCase;
+        private readonly IResetPlayerScoreUseCase _resetPlayerScoreUseCase;
+        private readonly IStopExtractingFrameUseCase _stopExtractingFrameUseCase;
+
+        private readonly IPopupNavigation _popupNavigation;
+        private readonly ITimerService _timerService;
 
         private FileSystemWatcher _fileWatcher;
         private List<DetectedBall> _detectedBalls;
@@ -29,9 +38,15 @@ namespace SnookerScoringSystem.ViewModels
         [ObservableProperty] 
         private string _videoSource;
 
+        [ObservableProperty] 
+        private string _formattedMatchTime;
 
+
+        [Obsolete]
         public LiveScoringPageViewModel(IGetPlayerUseCase getPlayerUseCase, IExtractFrameUseCase extractFrameUseCase, 
-            IDetectSnookerBallUseCase detectSnookerBallUseCase, IGetVideoPathUseCase getVideoPathUseCase)
+            IDetectSnookerBallUseCase detectSnookerBallUseCase, IGetVideoPathUseCase getVideoPathUseCase, IPopupNavigation popupNavigation,
+            IUpdatePlayerScoreUseCase updatePlayerScoreUseCase, IResetPlayerScoreUseCase resetPlayerScoreUseCase, 
+            IStopExtractingFrameUseCase stopExtractingFrameUseCase, ITimerService timerService)
         {
             this._getPlayerUseCase = getPlayerUseCase;
             this._player1 = new Player();
@@ -41,9 +56,29 @@ namespace SnookerScoringSystem.ViewModels
             this._getVideoPathUseCase = getVideoPathUseCase;
             this._extractFrameUseCase = extractFrameUseCase;
             this._detectSnookerBallUseCase = detectSnookerBallUseCase;
+            this._updatePlayerScoreUseCase = updatePlayerScoreUseCase;
+            this._resetPlayerScoreUseCase = resetPlayerScoreUseCase;
+            this._stopExtractingFrameUseCase = stopExtractingFrameUseCase;
 
-            setUpFileWatcher();
+            this._popupNavigation = popupNavigation;
+            this._timerService = timerService;
+
+            this._timerService.TimeUpdated += UpdateFormattedMatchTime;
+
+
+            WeakReferenceMessenger.Default.Register<ResetPlayerScoreMessage>(this, (r, m) =>
+            {
+                Task.Run(() => ResetScore());
+            });
+            WeakReferenceMessenger.Default.Register<GoToScoreBoardPageMessage>(this, (r, m) =>
+            {
+                Device.InvokeOnMainThreadAsync(async () => await GoToNextPage());
+            });
+
+            this._timerService.Reset();
+            SetUpFileWatcher();
         }
+
 
         public async Task UpdatePlayer()
         {
@@ -53,14 +88,58 @@ namespace SnookerScoringSystem.ViewModels
         }
 
         [RelayCommand]
-        public async Task ExtractFrame()
+        private async Task ExtractFrame()
         {
-            playVideo();
-            hideButton();
-            await _extractFrameUseCase.ExecuteAsync();
+            PlayVideo();
+            HideButton();
+
+            FormattedMatchTime = this._timerService.FormattedMatchTime;
+            this._timerService.Start();
+
+            await this._extractFrameUseCase.ExecuteAsync();
+
+            _timerService.Stop();
         }
 
-        private void playVideo()
+        [RelayCommand]
+        private async Task OpenResetPopupPage()
+        {
+            try
+            {
+                await _popupNavigation.PushAsync(new ResetScorePopupPage(new ResetScorePopupPageViewModel()));
+            }
+            catch (Exception ex)
+            {
+                throw new Exception($"An error occurred while closing the popup page. {ex}");
+            }
+        }
+
+        
+        [RelayCommand]
+        private async Task OpenEndGamePopupPage()
+        {
+            try
+            {
+                await _popupNavigation.PushAsync(new EndGamePopupPage(new EndGamePopupPageViewModel()));
+            }
+            catch (Exception ex)
+            {
+                throw new Exception($"An error occurred while closing the popup page. {ex}");
+            }
+        }
+
+
+        private async Task ResetScore()
+        {
+            this._timerService.Reset();
+            this._timerService.Start();
+
+            var playerScore = await this._resetPlayerScoreUseCase.ExecuteAsync();
+            Player1.Score = playerScore[0];
+            Player2.Score = playerScore[1];
+        }
+
+        private void PlayVideo()
         {
             try
             {
@@ -72,7 +151,7 @@ namespace SnookerScoringSystem.ViewModels
             }
         }
 
-        private void setUpFileWatcher()
+        private void SetUpFileWatcher()
         {
             //Set up the FileSystemWatcher to keep track on the changes of extracted frame
             _fileWatcher = new FileSystemWatcher();
@@ -82,12 +161,13 @@ namespace SnookerScoringSystem.ViewModels
             _fileWatcher.EnableRaisingEvents = true;
         }
 
-        private void hideButton()
+        private void HideButton()
         {
             IsButtonVisible = false;
         }
 
-        private async Task detectSnookerBall(string framePath)
+
+        private async Task DetectSnookerBall(string framePath)
         {
             _detectedBalls = await _detectSnookerBallUseCase.ExecuteAsync(framePath);
 
@@ -100,6 +180,8 @@ namespace SnookerScoringSystem.ViewModels
                 }
             }
             Player1.Score = score;
+
+            await this._updatePlayerScoreUseCase.ExecuteAsync(Player1.Score, Player2.Score);
         }
 
         private void OnFrameChanged(object sender, FileSystemEventArgs e)
@@ -108,7 +190,36 @@ namespace SnookerScoringSystem.ViewModels
             string framePath = e.FullPath;
 
             // Detect the snooker ball
-            detectSnookerBall(framePath);
+            Task.Run(() => DetectSnookerBall(framePath));
+        }
+
+        public void UpdateFormattedMatchTime()
+        {
+            FormattedMatchTime = this._timerService.FormattedMatchTime; 
+        }
+
+        public void ResetTimer()
+        {
+            FormattedMatchTime = this._timerService.FormattedMatchTime; 
+        }
+        private async Task GoToNextPage()
+        {
+            try
+            {
+                if (!IsButtonVisible)
+                {
+                    IsButtonVisible = true;
+                }
+
+                this._stopExtractingFrameUseCase.Execute();
+                this._timerService.Stop();
+                VideoSource = "";
+                await Shell.Current.GoToAsync($"{nameof(ScoreBoardPage)}");
+            }
+            catch (Exception ex)
+            {
+                throw new Exception($"{ex}");
+            }
         }
     }
 }

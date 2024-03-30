@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<mopups:PopupPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:mopups="clr-namespace:Mopups.Pages;assembly=Mopups"
+             xmlns:mopupsanim="clr-namespace:Mopups.Animations;assembly=Mopups"
+             xmlns:vm="clr-namespace:SnookerScoringSystem.ViewModels"
+             x:Class="SnookerScoringSystem.Views.Popups.MainPopupPage"
+             x:DataType="vm:MainPopupPageViewModel"
+             Title="MainPopupPage"
+             BackgroundColor="#99272727"
+             CloseWhenBackgroundIsClicked="False">
+
+    <mopups:PopupPage.Animation>
+        <mopupsanim:ScaleAnimation
+            DurationIn="700"
+            EasingIn="BounceOut"
+            PositionIn="Center"
+            PositionOut="Center"
+            ScaleIn="0.7"
+            ScaleOut="0.7">
+        </mopupsanim:ScaleAnimation>
+    </mopups:PopupPage.Animation>
+
+    <Border 
+        WidthRequest="600"
+        HeightRequest="450"
+        BackgroundColor="Black">
+
+        <Border.StrokeShape>
+            <RoundRectangle
+                CornerRadius="20, 20, 20, 20">
+            </RoundRectangle>
+        </Border.StrokeShape>
+
+        <Grid
+            Grid.ColumnDefinitions="*, Auto, *"
+            Grid.RowDefinitions="Auto, Auto, Auto">
+
+            <Label
+                Grid.Row="0"
+                Grid.Column="1"
+                Text="Please ensure that all the snooker balls are correctly&#x0a;positioned before starting the game."
+                HorizontalOptions="Center" 
+                FontSize="20"
+                FontFamily="AnonaThin"
+                FontAttributes="Bold"
+                Margin="20">
+            </Label>
+
+            <Image 
+                Grid.Row="1"
+                Grid.Column="1"
+                WidthRequest="400"
+                Height="150"
+                Source="snooker_balls_placement.jpg"
+                Aspect="AspectFit">
+            </Image>
+
+            <Button
+                Grid.Row="2"
+                Grid.Column="1"
+                Text="OK"
+                BackgroundColor="#1163FF"
+                TextColor="White"
+                FontFamily="AnonaThin"
+                Command="{Binding ClosePopupPageCommand}"
+                Margin="20"
+                WidthRequest="100">
+            </Button>
+
+        </Grid>
+
+    </Border>
+
+
+</mopups:PopupPage>

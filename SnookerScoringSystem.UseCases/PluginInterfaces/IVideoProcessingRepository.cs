@@ -4,5 +4,6 @@
     {
         Task ExtractFrameAsync();
         string GetVideoPath();
+        void StopExtractingFrame();
     }
 }

@@ -7,12 +7,46 @@
              x:DataType="vm:LiveScoringPageViewModel"
              Title="Snooker Scoring System">
 
+    <Shell.TitleView>
+        <Grid ColumnDefinitions="0.40*, 0.2*, 0.4*">
+            <Label
+                Grid.Column="0"
+                Text="Snooker Scoring System"
+                TextColor="White"
+                VerticalOptions="Center"
+                VerticalTextAlignment="Center"
+                FontSize="33"
+                FontFamily="AnonaThin"
+                Margin="10,0,0,0">
+            </Label>
+
+            <Label
+                Grid.Column="2"
+                VerticalOptions="Center"
+                VerticalTextAlignment="Center"
+                FontFamily="AnonaThin"
+                Margin="10,0,0,0">
+                <Label.FormattedText>
+                    <FormattedString>
+                        <Span Text="Match Time: "
+                              FontFamily="AnonaThin"
+                              FontSize="35"></Span>
+                        <Span Text="{Binding FormattedMatchTime}"
+                              FontFamily="AnonaThin"
+                              FontSize="35"></Span>
+                    </FormattedString>
+                </Label.FormattedText>
+            </Label>
+        </Grid>
+
+    </Shell.TitleView>
+
     <Grid BackgroundColor="Transparent"
-          ColumnDefinitions="3.7*, 0.05*, 1.25*">
+          ColumnDefinitions="3.6*, 0.05*, 1.35*">
 
         <!-- Video Panel -->
         <Grid Grid.Column="0"
-              RowDefinitions="*, Auto, *">
+              RowDefinitions="*, *, *">
 
             <!-- Video Player -->
             <toolkit:MediaElement x:Name="mediaElement"
@@ -26,8 +60,10 @@
                      Text="Start" 
                      HorizontalOptions="Center" 
                      VerticalOptions="Center" 
-                     BorderColor="Blue" 
-                     BorderWidth="0.5"
+                     BackgroundColor="#1163ff"
+                     TextColor="White"
+                     MinimumWidthRequest="100"
+                     FontFamily="AnonaThin"
                      IsVisible="{Binding IsButtonVisible}"
                      Command="{Binding ExtractFrameCommand}"/>
         </Grid>
@@ -50,15 +86,43 @@
         <BoxView Grid.Column="2" 
                  Color="#C0000000"/>
 
-        <StackLayout Grid.Column="2" Spacing="25" VerticalOptions="CenterAndExpand">
-            <Label Text="{Binding Player1.Name}" FontSize="40" HorizontalOptions="CenterAndExpand"/>
-            <Label Text="{Binding Player1.Score}" FontSize="40" HorizontalOptions="CenterAndExpand"/>
-            <Label Text="VS." FontSize="Medium" HorizontalOptions="CenterAndExpand"/>
-            <Label Text="{Binding Player2.Name}" FontSize="40" HorizontalOptions="CenterAndExpand"/>
-            <Label Text="{Binding Player2.Score}" FontSize="40" HorizontalOptions="CenterAndExpand"/>
-        </StackLayout>
-        
-    </Grid>
+        <Grid Grid.Column="2"
+              Grid.RowDefinitions="0.80*, 0.20*">
 
-    
+            <VerticalStackLayout Grid.Row="0" Spacing="25" VerticalOptions="CenterAndExpand">
+                <Label Text="{Binding Player1.Name}" FontSize="40" FontFamily="AnonaThin" HorizontalOptions="CenterAndExpand"/>
+                <Label Text="{Binding Player1.Score}" FontSize="40" FontFamily="AnonaThin" HorizontalOptions="CenterAndExpand"/>
+                <Label Text="VS." FontSize="Medium" HorizontalOptions="CenterAndExpand"/>
+                <Label Text="{Binding Player2.Name}" FontSize="40" FontFamily="AnonaThin" HorizontalOptions="CenterAndExpand"/>
+                <Label Text="{Binding Player2.Score}" FontSize="40" FontFamily="AnonaThin" HorizontalOptions="CenterAndExpand"/>
+            </VerticalStackLayout>
+
+            <Grid ColumnDefinitions="*, *"
+                  Grid.Row="1">
+                <Button 
+                    Command="{Binding OpenResetPopupPageCommand}"
+                    BackgroundColor="#1163ff" 
+                    TextColor="White" 
+                    Grid.Column="0" 
+                    HeightRequest="30"
+                    WidthRequest="100"
+                    Text="Reset"
+                    FontFamily="AnonaThin"
+                    Margin="25">
+                </Button>
+
+                <Button 
+                    Command="{Binding OpenEndGamePopupPageCommand}"
+                    BackgroundColor="#1163ff" 
+                    TextColor="White" 
+                    Grid.Column="1" 
+                    HeightRequest="30"
+                    WidthRequest="100"
+                    Text="End Game"
+                    FontFamily="AnonaThin"
+                    Margin="25">
+                </Button>
+            </Grid>
+        </Grid>
+    </Grid>
 </ContentPage>
