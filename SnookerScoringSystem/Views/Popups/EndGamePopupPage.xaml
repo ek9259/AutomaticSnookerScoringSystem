@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<mopups:PopupPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:mopups="clr-namespace:Mopups.Pages;assembly=Mopups"
+             xmlns:mopupsanim="clr-namespace:Mopups.Animations;assembly=Mopups"
+             xmlns:vm="clr-namespace:SnookerScoringSystem.ViewModels"
+             x:Class="SnookerScoringSystem.Views.Popups.EndGamePopupPage"
+             x:DataType="vm:EndGamePopupPageViewModel"
+             Title="MainPopupPage"
+             BackgroundColor="#99272727"
+             CloseWhenBackgroundIsClicked="False">
+
+    <mopups:PopupPage.Animation>
+        <mopupsanim:ScaleAnimation
+            DurationIn="700"
+            EasingIn="BounceOut"
+            PositionIn="Center"
+            PositionOut="Center"
+            ScaleIn="0.7"
+            ScaleOut="0.7"
+            ></mopupsanim:ScaleAnimation>
+    </mopups:PopupPage.Animation>
+
+    <Border 
+        WidthRequest="500"
+        HeightRequest="200"
+        BackgroundColor="Black">
+
+        <Border.StrokeShape>
+            <RoundRectangle
+                CornerRadius="20, 20, 20, 20">
+            </RoundRectangle>
+        </Border.StrokeShape>
+
+        <Grid
+            Grid.ColumnDefinitions="*, Auto, *"
+            Grid.RowDefinitions="Auto, Auto">
+
+            <Label
+                Grid.Row="0"
+                Grid.Column="1"
+                Text="Are you sure you want to end the game?"
+                HorizontalOptions="Center" 
+                FontSize="20"
+                FontFamily="AnonaThin"
+                FontAttributes="Bold"
+                Margin="20">
+            </Label>
+
+
+            <Grid
+                Grid.Row="1"
+                Grid.Column="1"
+                ColumnDefinitions="*, *">
+
+                <Button
+                    Grid.Column="0"
+                    Text="NO"
+                    BackgroundColor="#F44336"
+                    TextColor="White"
+                    VerticalOptions="End"
+                    FontFamily="AnonaThin"
+                    Command="{Binding ClosePopupPageCommand}"
+                    Margin="20"
+                    WidthRequest="100">
+                </Button>
+
+                <Button
+                    Grid.Column="1"
+                    Text="YES"
+                    BackgroundColor="#4CAF50"
+                    TextColor="White"
+                    VerticalOptions="End"
+                    FontFamily="AnonaThin"
+                    Command="{Binding SendGoToScoreBoardPageMessageCommand}"
+                    Margin="20"
+                    WidthRequest="100">
+                </Button>
+            </Grid>
+
+        </Grid>
+
+    </Border>
+
+
+</mopups:PopupPage>

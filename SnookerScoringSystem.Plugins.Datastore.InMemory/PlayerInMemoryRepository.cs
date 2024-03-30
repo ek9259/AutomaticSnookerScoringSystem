@@ -7,11 +7,11 @@ namespace SnookerScoringSystem.Plugins.Datastore.InMemory
     public class PlayerInMemoryRepository : IPlayerRepository
     {
         // Use a thread-safe collection
-        private static ConcurrentQueue<Player> _players;
+        private static List<Player> _players;
 
         public PlayerInMemoryRepository()
         {
-            _players = new ConcurrentQueue<Player>();
+            _players = new List<Player>();
         }
 
         public Task AddPlayerAsync(Player player)
@@ -38,7 +38,7 @@ namespace SnookerScoringSystem.Plugins.Datastore.InMemory
                     player.Name = $"Player {player.Id} ";
                 }
 
-                _players.Enqueue(player);
+                _players.Add(player);
             }
             catch (Exception ex)
             {
@@ -51,7 +51,31 @@ namespace SnookerScoringSystem.Plugins.Datastore.InMemory
         // This method is responsible for retrieving all players from the in-memory data store.
         public Task<List<Player>> GetPlayerAsync()
         {
-            return Task.FromResult(_players.ToList());
+            return Task.FromResult(_players);
+        }
+
+        public Task UpdatePlayerScoreAsync(int player1Score, int player2Score)
+        {
+            _players[0].Score = player1Score;
+            _players[1].Score = player2Score;
+            return Task.CompletedTask;
+        }
+
+        public Task<List<int>> ResetPlayerScoreAsync()
+        {
+            _players[0].Score = 0;
+            _players[1].Score = 0;
+            var playerScores = new List<int>
+            {
+                _players[0].Score,
+                _players[1].Score
+            };
+            return Task.FromResult(playerScores);
+        }
+
+        public void Reset()
+        {
+            _players.Clear();
         }
     }
 }

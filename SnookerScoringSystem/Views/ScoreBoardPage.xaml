@@ -1,0 +1,203 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:vm="clr-namespace:SnookerScoringSystem.ViewModels"
+             x:Class="SnookerScoringSystem.Views.Popups.ScoreBoardPage"
+             x:DataType="vm:ScoreBoardPageViewModel"
+             BackgroundImageSource="background_image.png"
+             BackgroundColor="Black">
+
+    <Shell.TitleView>
+        <Grid ColumnDefinitions="0.40*, 0.2*, 0.4*">
+            <Label
+                Grid.Column="0"
+                Text="Score Board"
+                TextColor="White"
+                VerticalOptions="Center"
+                VerticalTextAlignment="Center"
+                FontSize="33"
+                FontFamily="AnonaThin"
+                Margin="10,0,0,0">
+            </Label>
+
+            <Label
+                Grid.Column="2"
+                VerticalOptions="Center"
+                VerticalTextAlignment="Center"
+                FontFamily="AnonaThin"
+                Margin="10,0,0,0">
+            </Label>
+        </Grid>
+
+    </Shell.TitleView>
+
+    <Grid RowDefinitions="0.1*, *, 0.1*"
+          ColumnDefinitions="0.1*, *, 0.1*"
+          BackgroundColor="#99272727">
+        <Frame Grid.Row="1"
+               Grid.Column="1"
+               BackgroundColor="#EE272727">
+
+            <Grid ColumnDefinitions="0.3*, 0.4*, 0.3*">
+                <Frame Grid.Column="0"
+                       BackgroundColor="#000010"
+                       CornerRadius="10">
+
+                    <Grid RowDefinitions="0.55*, 0.05*, 0.4*">
+                        <Grid Grid.Row="0"
+                              RowDefinitions="0.4*, 0.6*">
+                            <Label Grid.Row="0" 
+                                   Text="{Binding Player1Name}"
+                                   TextColor="#9CA3AF"
+                                   FontAttributes="Bold"
+                                   FontSize="45"
+                                   FontFamily="AnonaThin"
+                                   VerticalOptions="Start"
+                                   HorizontalOptions="Center">
+                            </Label>
+                            <Label Grid.Row="1" 
+                                   Text="{Binding Player1Score}"
+                                   FontSize="90"
+                                   FontFamily="AnonaThin"
+                                   VerticalOptions="Start"
+                                   HorizontalOptions="Center">
+                            </Label>
+                        </Grid>
+
+                        <BoxView Grid.Row="1" 
+                                 HeightRequest="1"
+                                 Color="White"
+                                 Margin="0,5,0, 0">
+                        </BoxView>
+
+                        <Grid Grid.Row="2"
+                              RowDefinitions="0.4*, 0.6*">
+                            <Label Grid.Row="0" 
+                                   Text="Fouls"
+                                   TextColor="#7C0A02"
+                                   FontAttributes="Bold"
+                                   FontSize="40"
+                                   FontFamily="AnonaThin"
+                                   VerticalOptions="Center"
+                                   HorizontalOptions="Center">
+                            </Label>
+                            <Label Grid.Row="1" 
+                                   Text="0"
+                                   TextColor="#ED2939"
+                                   FontSize="65"
+                                   FontFamily="AnonaThin"
+                                   VerticalOptions="Start"
+                                   HorizontalOptions="Center">
+                            </Label>
+                        </Grid>
+                    </Grid>
+
+                </Frame>
+
+                <Grid Grid.Column="1"
+                      HorizontalOptions="Center"
+                      RowDefinitions="0.3*, 0.4*, 0.3*">
+
+                    <Grid Grid.Row="0"
+                          RowDefinitions="0.4*, 0.6*">
+                        <Label Grid.Row="0"
+                               Text="Match Time"
+                               TextColor="#FFDC41"
+                               FontFamily="AnonaThin"
+                               VerticalOptions="Start"
+                               HorizontalOptions="Center"
+                               FontSize="35">
+                        </Label>
+                        <Label Grid.Row="1"
+                               Text="{Binding FormattedMatchTime}"
+                               VerticalOptions="Start"
+                               HorizontalOptions="Center"
+                               TextColor="#FFDC41"
+                               FontFamily="AnonaThin"
+                               FontAttributes="Bold"
+                               FontSize="55">
+                        </Label>
+                    </Grid>
+
+                    <Label Grid.Row="1"
+                           Text="VS"
+                           VerticalOptions="Center"
+                           HorizontalOptions="Center"
+                           TextColor="WhiteSmoke"
+                           FontFamily="AnonaThin"
+                           FontAttributes="Bold"
+                           FontSize="100">
+                    </Label>
+
+                    <Button Grid.Row="2"
+                            Command="{Binding StartNewGameCommand}"
+                            BackgroundColor="#1163FF"
+                            HeightRequest="50"
+                            WidthRequest="140"
+                            VerticalOptions="End"
+                            Text="NEW GAME"
+                            FontFamily="AnonaThin"
+                            TextColor="WhiteSmoke"
+                            FontSize="20">
+                    </Button>
+                    
+                </Grid>
+
+                <Frame Grid.Column="2"
+                       BackgroundColor="#000010"
+                       CornerRadius="10">
+
+                    <Grid RowDefinitions="0.55*, 0.05*, 0.4*">
+                        <Grid Grid.Row="0"
+                              RowDefinitions="0.4*, 0.6*">
+                            <Label Grid.Row="0" 
+                                   Text="{Binding Player2Name}"
+                                   TextColor="#9CA3AF"
+                                   FontAttributes="Bold"
+                                   FontSize="45"
+                                   FontFamily="AnonaThin"
+                                   VerticalOptions="Start"
+                                   HorizontalOptions="Center">
+                            </Label>
+                            <Label Grid.Row="1" 
+                                   Text="{Binding Player2Score}"
+                                   FontSize="90"
+                                   FontFamily="AnonaThin"
+                                   VerticalOptions="Start"
+                                   HorizontalOptions="Center">
+                            </Label>
+                        </Grid>
+
+                        <BoxView Grid.Row="1" 
+                                 HeightRequest="1"
+                                 Color="White"
+                                 Margin="0,5,0, 0">
+                        </BoxView>
+
+                        <Grid Grid.Row="2"
+                              RowDefinitions="0.4*, 0.6*">
+                            <Label Grid.Row="0" 
+                                   Text="Fouls"
+                                   TextColor="#7C0A02"
+                                   FontAttributes="Bold"
+                                   FontSize="40"
+                                   FontFamily="AnonaThin"
+                                   VerticalOptions="Center"
+                                   HorizontalOptions="Center">
+                            </Label>
+                            <Label Grid.Row="1" 
+                                   Text="0"
+                                   TextColor="#ED2939"
+                                   FontSize="65"
+                                   FontFamily="AnonaThin"
+                                   VerticalOptions="Start"
+                                   HorizontalOptions="Center">
+                            </Label>
+                        </Grid>
+                    </Grid>
+
+                </Frame>
+            </Grid>
+        </Frame>
+    </Grid>
+</ContentPage>

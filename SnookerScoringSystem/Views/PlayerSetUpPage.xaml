@@ -1,50 +1,71 @@
 <?xml version="1.0" encoding="utf-8" ?>
-<uranium:UraniumContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:vm="clr-namespace:SnookerScoringSystem.ViewModels"
              xmlns:material="http://schemas.enisn-projects.io/dotnet/maui/uraniumui/material"
              xmlns:uranium="http://schemas.enisn-projects.io/dotnet/maui/uraniumui"
              x:Class="SnookerScoringSystem.Views.PlayerSetUpPage"
              x:DataType="vm:PlayerSetUpPageViewModel"
-             BackgroundColor="Transparent"
-             Title="Welcome"
              BackgroundImageSource="background_image.png">
 
+    <Shell.TitleView>
+        <Label 
+            Text="Snooker Scoring System"
+            TextColor="White"
+            VerticalOptions="Center"
+            VerticalTextAlignment="Center"
+            FontSize="33"
+            Margin="10,0,0,10"
+            FontFamily="AnonaThin">
+        </Label>
+    </Shell.TitleView>
 
     <Grid Padding="5"
-          RowDefinitions=".25*, *, .25*"
+          RowDefinitions="*, Auto, *"
           ColumnDefinitions=".65*, .35*"
-          RowSpacing="5">
+          RowSpacing="5"
+          BackgroundColor="#44272727">
 
         <Frame Grid.Row="1"
                Grid.Column="1"
                Margin="0, 0, 20, 0"> 
             <VerticalStackLayout>
+                <Label
+                    Text="Welcome"
+                    HorizontalOptions="Center"
+                    FontSize="40"
+                    FontFamily="AnonaThin"></Label>
                 <Label 
-                    Text="Please enter player 1's name." 
-                    Margin="0,20,0,20"
-                    FontSize="20"></Label>
+                    Text="Enter nicknames to continue" 
+                    Margin="0,20,0,10"
+                    FontSize="22"
+                    TextColor="#9CA3AF"
+                    FontFamily="AnonaThin"></Label>
                 <Entry 
-                    Margin="0,0,0,0"
+                    Margin="0,20,0,0"
                     MinimumWidthRequest="100"
+                    MinimumHeightRequest="50"
                     Text="{Binding Player1.Name, Mode=TwoWay}"
-                    Placeholder="Player 1's nickname"></Entry>
-                <Label 
-                    Text="Please enter player 2's name" 
-                    Margin="0,20,0,20"
-                    FontSize="20"></Label>
+                    Placeholder="Player 1"
+                    FontFamily="AnonaThin"></Entry>
                 <Entry
-                    Margin="0,0,0,10"
+                    Margin="0,40,0,0"
                     MinimumWidthRequest="100"
+                    MinimumHeightRequest="50"
                     Text="{Binding Player2.Name, Mode=TwoWay}"
-                    Placeholder="Player 2's nickname"></Entry>
+                    Placeholder="Player 2"
+                    FontFamily="AnonaThin"></Entry>
                 <Button
                     StyleClass="OutlinedButton"
                     Text="Next" 
                     VerticalOptions="End"
+                    BackgroundColor="#1163ff" 
+                    TextColor="White"
+                    FontFamily="AnonaThin"
+                    Margin="0,40,0,0"
                     Command="{Binding AddPlayerCommand}"></Button>
             </VerticalStackLayout>
         </Frame>
 
     </Grid>
-</uranium:UraniumContentPage>
+</ContentPage>

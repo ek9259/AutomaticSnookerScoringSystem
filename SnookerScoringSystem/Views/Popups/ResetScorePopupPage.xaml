@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<mopups:PopupPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:mopups="clr-namespace:Mopups.Pages;assembly=Mopups"
+             xmlns:mopupsanim="clr-namespace:Mopups.Animations;assembly=Mopups"
+             xmlns:vm="clr-namespace:SnookerScoringSystem.ViewModels"
+             x:Class="SnookerScoringSystem.Views.Popups.ResetScorePopupPage"
+             x:DataType="vm:ResetScorePopupPageViewModel"
+             Title="ResetPopupPage"
+             BackgroundColor="#99272727"
+             CloseWhenBackgroundIsClicked="False">
+
+    <mopups:PopupPage.Animation>
+        <mopupsanim:ScaleAnimation
+            DurationIn="700"
+            EasingIn="BounceOut"
+            PositionIn="Center"
+            PositionOut="Center"
+            ScaleIn="0.7"
+            ScaleOut="0.7"
+            ></mopupsanim:ScaleAnimation>
+    </mopups:PopupPage.Animation>
+
+    <Border 
+        WidthRequest="700"
+        HeightRequest="500"
+        BackgroundColor="Black">
+
+        <Border.StrokeShape>
+            <RoundRectangle
+                CornerRadius="20, 20, 20, 20">
+            </RoundRectangle>
+        </Border.StrokeShape>
+
+        <Grid
+            Grid.ColumnDefinitions="*, Auto, *">
+            <Grid 
+                Grid.Column="1"
+                Grid.RowDefinitions="Auto, Auto, Auto, Auto">
+                <Label
+                    Grid.Row="0"
+                    Text="Please ensure that all the snooker balls are correctly&#x0a;positioned before resetting the score."
+                    HorizontalOptions="Center" 
+                    FontSize="20"
+                    FontFamily="AnonaThin"
+                    FontAttributes="Bold"
+                    Margin="15">
+                </Label>
+
+                <Image 
+                    Grid.Row="1"
+                    WidthRequest="400"
+                    Height="150"
+                    Source="snooker_balls_placement.jpg"
+                    Aspect="AspectFit">
+                </Image>
+
+                <Label
+                    Grid.Row="2"
+                    Text="Once reset, all scores will be set to zero.&#x0a;Are you sure you want to reset the game?"
+                    HorizontalOptions="Center" 
+                    FontSize="15"
+                    FontFamily="AnonaThin"
+                    TextColor="#F44336"
+                    FontAttributes="Bold"
+                    Margin="10">
+                </Label>
+
+                <Grid
+                    Grid.Row="3"
+                    Grid.ColumnDefinitions="*, *">
+
+                    <Button
+                        Grid.Column="0"
+                        Text="NO"
+                        BackgroundColor="#F44336"
+                        TextColor="White"
+                        Command="{Binding ClosePopupPageCommand}"
+                        Margin="20,0,20,20"
+                        FontFamily="AnonaThin"
+                        WidthRequest="100">
+                    </Button>
+
+                    <Button
+                        Grid.Column="1"
+                        Text="YES"
+                        BackgroundColor="#4CAF50"
+                        TextColor="White"
+                        Command="{Binding SendResetScoreMessageCommand}"
+                        Margin="20,0,20,20"
+                        FontFamily="AnonaThin"
+                        WidthRequest="100">
+                    </Button>
+                </Grid>
+            </Grid>
+        </Grid>
+    </Border>
+</mopups:PopupPage>
