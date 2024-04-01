@@ -141,6 +141,7 @@ namespace SnookerScoringSystem.ViewModels
             var playerScore = await this._resetPlayerScoreUseCase.ExecuteAsync();
             Player1.Score = playerScore[0];
             Player2.Score = playerScore[1];
+            _calculateScore.ResetScore();
         }
 
         private void PlayVideo()
@@ -219,6 +220,7 @@ namespace SnookerScoringSystem.ViewModels
 
                 this._stopExtractingFrameUseCase.Execute();
                 this._timerService.Stop();
+                _calculateScore.ResetScore();
                 VideoSource = "";
                 await Shell.Current.GoToAsync($"{nameof(ScoreBoardPage)}");
             }

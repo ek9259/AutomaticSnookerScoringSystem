@@ -43,9 +43,30 @@ namespace SnookerScoringSystem.GameplayServices
             private bool FoulingTurn = false;
             private bool MustHitRed = true;
             private bool PlayerTurnStarted = false;
+            private bool ResetingScore = false;
             private Dictionary<DetectedBall, BallLocation> LastLocationInfo = new();
 
+            public void ResetScore()
+            {
+                PlayersScores = [0, 0];
+                for (int i = 0; i < 8; i++)
+                {
+                    IsBallPocketed[i] = false;
+                }
+            CurrentRedBallAmount = 15;
+            PreviousRedBallAmount = 15;
+            PlayerTurn = 0;
+            Pocketed = false;
+            FoulingTurn = false;
+            MustHitRed = true;
+            PlayerTurnStarted = false;
+            ResetingScore = true;
+            LastLocationInfo.Clear();
+            }
+
             public async Task <List<int>> CalculateScoreAsync(List<DetectedBall> detectedBalls)
+            {
+            if (!ResetingScore)
             {
                 if (LastLocationInfo.Count != 0)
                 {
@@ -94,7 +115,10 @@ namespace SnookerScoringSystem.GameplayServices
                 {
                     LastLocationInfo.Add(Obj, new BallLocation(Obj.X, Obj.Y));
                 }
-             return PlayersScores;
+                return PlayersScores;
+            }
+            ResetingScore = false;
+            return PlayersScores;
             }
 
             //Threshold for the ball location differences.
