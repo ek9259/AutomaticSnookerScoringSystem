@@ -13,6 +13,8 @@ using Mopups.Interfaces;
 using Mopups.Services;
 using SnookerScoringSystem.Plugins.Datastore.GamePlay;
 using SnookerScoringSystem.Services;
+using SnookerScoringSystem.GameplayServices;
+using SnookerScoringSystem.GameplayServices.Interfaces;
 using SnookerScoringSystem.Services.Intefaces;
 using SnookerScoringSystem.Views.Popups;
 using UraniumUI;
@@ -51,7 +53,8 @@ namespace SnookerScoringSystem
             builder.Services.AddTransient<IGetPlayerUseCase, GetPlayerUseCase>();
             builder.Services.AddTransient<IDetectSnookerBallUseCase, DetectSnookerBallUseCase>();
             builder.Services.AddTransient<IExtractFrameUseCase, ExtractFrameUseCase>();
-            builder.Services.AddTransient<ICalculateScoreUseCase, CalculateScoreUseCase>();
+            builder.Services.AddTransient<ICalculateScore, CalculateScore>();
+            builder.Services.AddTransient<IGameManager, GameManager>();
             builder.Services.AddTransient<IGetVideoPathUseCase, GetVideoPathUseCase>();
             builder.Services.AddTransient<IUpdatePlayerScoreUseCase, UpdatePlayerScoreUseCase>();
             builder.Services.AddTransient<IResetPlayerScoreUseCase, ResetPlayerScoreUseCase>();

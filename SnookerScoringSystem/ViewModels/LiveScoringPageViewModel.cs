@@ -7,6 +7,8 @@ using SnookerScoringSystem.Domain.Messages;
 using SnookerScoringSystem.UseCases.Interfaces;
 using SnookerScoringSystem.Views.Popups;
 using SnookerScoringSystem.Services.Intefaces;
+using SnookerScoringSystem.GameplayServices.Interfaces;
+using SnookerScoringSystem.GameplayServices;
 
 namespace SnookerScoringSystem.ViewModels
 {
@@ -19,6 +21,7 @@ namespace SnookerScoringSystem.ViewModels
         private readonly IUpdatePlayerScoreUseCase _updatePlayerScoreUseCase;
         private readonly IResetPlayerScoreUseCase _resetPlayerScoreUseCase;
         private readonly IStopExtractingFrameUseCase _stopExtractingFrameUseCase;
+        private readonly ICalculateScore _calculateScore;
 
         private readonly IPopupNavigation _popupNavigation;
         private readonly ITimerService _timerService;
@@ -46,7 +49,7 @@ namespace SnookerScoringSystem.ViewModels
         public LiveScoringPageViewModel(IGetPlayerUseCase getPlayerUseCase, IExtractFrameUseCase extractFrameUseCase, 
             IDetectSnookerBallUseCase detectSnookerBallUseCase, IGetVideoPathUseCase getVideoPathUseCase, IPopupNavigation popupNavigation,
             IUpdatePlayerScoreUseCase updatePlayerScoreUseCase, IResetPlayerScoreUseCase resetPlayerScoreUseCase, 
-            IStopExtractingFrameUseCase stopExtractingFrameUseCase, ITimerService timerService)
+            IStopExtractingFrameUseCase stopExtractingFrameUseCase, ITimerService timerService, IGameManager gameManager)
         {
             this._getPlayerUseCase = getPlayerUseCase;
             this._player1 = new Player();
@@ -65,6 +68,7 @@ namespace SnookerScoringSystem.ViewModels
 
             this._timerService.TimeUpdated += UpdateFormattedMatchTime;
 
+            _calculateScore = gameManager.StartNewGame();
 
             WeakReferenceMessenger.Default.Register<ResetPlayerScoreMessage>(this, (r, m) =>
             {
@@ -137,6 +141,7 @@ namespace SnookerScoringSystem.ViewModels
             var playerScore = await this._resetPlayerScoreUseCase.ExecuteAsync();
             Player1.Score = playerScore[0];
             Player2.Score = playerScore[1];
+            _calculateScore.ResetScore();
         }
 
         private void PlayVideo()
@@ -171,17 +176,19 @@ namespace SnookerScoringSystem.ViewModels
         {
             _detectedBalls = await _detectSnookerBallUseCase.ExecuteAsync(framePath);
 
-            int score = 0;
-            foreach (var ball in _detectedBalls)
-            {
-                if (ball.ClassName == "Red ball")
-                {
-                    score++;
-                }
-            }
-            Player1.Score = score;
+            /* int score = 0;
+             foreach (var ball in _detectedBalls)
+             {
+                 if (ball.ClassName == "Red ball")
+                 {
+                     score++;
+                 }
+             }
+             Player1.Score = score;
 
-            await this._updatePlayerScoreUseCase.ExecuteAsync(Player1.Score, Player2.Score);
+             await this._updatePlayerScoreUseCase.ExecuteAsync(Player1.Score, Player2.Score); */
+            List<int> PlayerScores = await _calculateScore.CalculateScoreAsync(_detectedBalls);
+            await this._updatePlayerScoreUseCase.ExecuteAsync(PlayerScores[0], PlayerScores[1]);
         }
 
         private void OnFrameChanged(object sender, FileSystemEventArgs e)
@@ -209,6 +216,7 @@ namespace SnookerScoringSystem.ViewModels
 
                 this._stopExtractingFrameUseCase.Execute();
                 this._timerService.Stop();
+                _calculateScore.ResetScore();
                 VideoSource = "";
                 await Shell.Current.GoToAsync($"{nameof(ScoreBoardPage)}");
             }
