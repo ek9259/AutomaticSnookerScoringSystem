@@ -42,7 +42,7 @@
                 Text="Please ensure that all the snooker balls are correctly&#x0a;positioned before starting the game."
                 HorizontalOptions="Center" 
                 FontSize="20"
-                FontFamily="AnonaThin"
+                FontFamily="LTSMRegular"
                 FontAttributes="Bold"
                 Margin="20">
             </Label>
@@ -62,7 +62,7 @@
                 Text="OK"
                 BackgroundColor="#1163FF"
                 TextColor="White"
-                FontFamily="AnonaThin"
+                FontFamily="LTSMRegular"
                 Command="{Binding ClosePopupPageCommand}"
                 Margin="20"
                 WidthRequest="100">

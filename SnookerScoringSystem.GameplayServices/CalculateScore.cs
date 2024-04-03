@@ -52,16 +52,16 @@ namespace SnookerScoringSystem.GameplayServices
                 for (int i = 0; i < 8; i++)
                 {
                     IsBallPocketed[i] = false;
-                }
-            CurrentRedBallAmount = 15;
-            PreviousRedBallAmount = 15;
-            PlayerTurn = 0;
-            Pocketed = false;
-            FoulingTurn = false;
-            MustHitRed = true;
-            PlayerTurnStarted = false;
-            ResetingScore = true;
-            LastLocationInfo.Clear();
+                } 
+                CurrentRedBallAmount = 15;
+                PreviousRedBallAmount = 15;
+                PlayerTurn = 0;
+                Pocketed = false;
+                FoulingTurn = false;
+                MustHitRed = true;
+                PlayerTurnStarted = false;
+                ResetingScore = true;
+                LastLocationInfo.Clear();
             }
 
             public async Task <List<int>> CalculateScoreAsync(List<DetectedBall> detectedBalls)
@@ -208,8 +208,7 @@ namespace SnookerScoringSystem.GameplayServices
                                 }
                             }
                         }
-
-                       // Fouling if a cueball is Pocketed (Cueball Pocketed)
+                        // Fouling if a cueball is Pocketed (Cueball Pocketed)
                         if (!IsBallPocketed[i] && i == (int)BallColour.Whiteball && (count_cur[i] < 2 && count_bef[i] < 2))
                         {
                             CheckFouling(Fouling.CueballPocketed, 4);
@@ -231,10 +230,8 @@ namespace SnookerScoringSystem.GameplayServices
                         {
                             MustHitRed = true;
                         }
-
-
+                    }
                 }
-            }
 
                 return BallPockected > 0;
             }

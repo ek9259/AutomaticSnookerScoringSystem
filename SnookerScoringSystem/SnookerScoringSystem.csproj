@@ -58,8 +58,10 @@
 	</ItemGroup>
 
 	<ItemGroup>
-	  <None Remove="Resources\Fonts\Fontspring-DEMO-anona-black.otf" />
-	  <None Remove="Resources\Fonts\Fontspring-DEMO-anona-thin.otf" />
+	  <None Remove="Resources\Fonts\LTSuperiorMono-Bold.otf" />
+	  <None Remove="Resources\Fonts\LTSuperiorMono-Medium.otf" />
+	  <None Remove="Resources\Fonts\LTSuperiorMono-Regular.otf" />
+	  <None Remove="Resources\Fonts\LTSuperiorMono-Semibold.otf" />
 	  <None Remove="Resources\Images\Snooker_Balls_Placement.jpg" />
 	</ItemGroup>
 
@@ -80,11 +82,9 @@
 	<ItemGroup>
 	  <ProjectReference Include="..\SnookerScoringSystem.Domain\SnookerScoringSystem.Domain.csproj" />
 	  <ProjectReference Include="..\SnookerScoringSystem.GameplayServices\SnookerScoringSystem.GameplayServices.csproj" />
-	  <ProjectReference Include="..\SnookerScoringSystem.Plugins.Datastore.GamePlay\SnookerScoringSystem.Plugins.Datastore.GamePlay.csproj" />
 	  <ProjectReference Include="..\SnookerScoringSystem.Plugins.Datastore.InMemory\SnookerScoringSystem.Plugins.Datastore.InMemory.csproj" />
 	  <ProjectReference Include="..\SnookerScoringSystem.Plugins.Datastore.Model\SnookerScoringSystem.Plugins.Datastore.Model.csproj" />
 	  <ProjectReference Include="..\SnookerScoringSystem.Plugins.Datastore.VideoProcessing\SnookerScoringSystem.Plugins.Datastore.VideoProcessing.csproj" />
-	  <ProjectReference Include="..\SnookerScoringSystem.Services\SnookerScoringSystem.Services.csproj" />
 	  <ProjectReference Include="..\SnookerScoringSystem.UseCases\SnookerScoringSystem.UseCases.csproj" />
 	</ItemGroup>
 

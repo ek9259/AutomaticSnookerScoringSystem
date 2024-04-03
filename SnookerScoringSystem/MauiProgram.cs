@@ -11,11 +11,8 @@ using CommunityToolkit.Maui;
 using Mopups.Hosting;
 using Mopups.Interfaces;
 using Mopups.Services;
-using SnookerScoringSystem.Plugins.Datastore.GamePlay;
-using SnookerScoringSystem.Services;
 using SnookerScoringSystem.GameplayServices;
 using SnookerScoringSystem.GameplayServices.Interfaces;
-using SnookerScoringSystem.Services.Intefaces;
 using SnookerScoringSystem.Views.Popups;
 using UraniumUI;
 
@@ -35,8 +32,10 @@ namespace SnookerScoringSystem
                 .ConfigureMopups()
                 .ConfigureFonts(fonts =>
                 {
-                    fonts.AddFont("Fontspring-DEMO-anona-black.otf", "AnonaBlack");
-                    fonts.AddFont("Fontspring-DEMO-anona-thin.otf", "AnonaThin");
+                    fonts.AddFont("LTSuperiorMono-Bold.otf", "LTSMBold");
+                    fonts.AddFont("LTSuperiorMono-Medium.otf", "LTSMMedium");
+                    fonts.AddFont("LTSuperiorMono-Semibold.otf", "LTSMSemibold");
+                    fonts.AddFont("LTSuperiorMono-Regular.otf", "LTSMRegular");
                     fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");
                     fonts.AddFont("OpenSans-Semibold.ttf", "OpenSansSemibold");
                 });
@@ -48,7 +47,6 @@ namespace SnookerScoringSystem
             builder.Services.AddSingleton<IPlayerRepository, PlayerInMemoryRepository>();
             builder.Services.AddSingleton<ISnookerDetectionModelRepository, ModelRepository>();
             builder.Services.AddSingleton<IVideoProcessingRepository, VideoProcessingRepository>();
-            builder.Services.AddSingleton<IGamePlayRepository, GamePlayRepository>();
             builder.Services.AddTransient<IAddPlayerUseCase, AddPlayerUseCase>();
             builder.Services.AddTransient<IGetPlayerUseCase, GetPlayerUseCase>();
             builder.Services.AddTransient<IDetectSnookerBallUseCase, DetectSnookerBallUseCase>();

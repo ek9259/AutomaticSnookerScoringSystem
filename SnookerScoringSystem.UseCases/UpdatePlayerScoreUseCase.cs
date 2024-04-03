@@ -12,9 +12,9 @@ namespace SnookerScoringSystem.UseCases
             this._playerRepository = playerRepository;
         }
 
-        public async Task ExecuteAsync(int player1Score, int player2Score)
+        public async Task ExecuteAsync(int player1Score, int player1Foul, int player2Score, int player2Foul)
         {
-            await this._playerRepository.UpdatePlayerScoreAsync(player1Score, player2Score);
+            await this._playerRepository.UpdatePlayerScoreAsync(player1Score, player1Foul, player2Score, player2Foul);
         }
     }
 }

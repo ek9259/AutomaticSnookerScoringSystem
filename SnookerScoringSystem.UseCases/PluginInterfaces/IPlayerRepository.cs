@@ -10,7 +10,7 @@ namespace SnookerScoringSystem.UseCases.PluginInterfaces
         // Abstract methods that are needed to be implemented by PlayerRepository
         Task AddPlayerAsync(Player player);
         Task<List<Player>> GetPlayerAsync();
-        Task UpdatePlayerScoreAsync(int player1Score, int player2Score);
+        Task UpdatePlayerScoreAsync(int player1Score, int player1Foul, int player2Score, int player2Foul);
         Task<List<int>> ResetPlayerScoreAsync();
         void Reset();
     }

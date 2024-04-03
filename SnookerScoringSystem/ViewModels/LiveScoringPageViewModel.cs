@@ -6,7 +6,6 @@ using SnookerScoringSystem.Domain;
 using SnookerScoringSystem.Domain.Messages;
 using SnookerScoringSystem.UseCases.Interfaces;
 using SnookerScoringSystem.Views.Popups;
-using SnookerScoringSystem.Services.Intefaces;
 using SnookerScoringSystem.GameplayServices.Interfaces;
 using SnookerScoringSystem.GameplayServices;
 
@@ -188,7 +187,7 @@ namespace SnookerScoringSystem.ViewModels
 
              await this._updatePlayerScoreUseCase.ExecuteAsync(Player1.Score, Player2.Score); */
             List<int> PlayerScores = await _calculateScore.CalculateScoreAsync(_detectedBalls);
-            await this._updatePlayerScoreUseCase.ExecuteAsync(PlayerScores[0], PlayerScores[1]);
+            await this._updatePlayerScoreUseCase.ExecuteAsync(PlayerScores[0], Player1.Foul, PlayerScores[1], Player2.Foul);
         }
 
         private void OnFrameChanged(object sender, FileSystemEventArgs e)

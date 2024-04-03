@@ -42,7 +42,7 @@
                     Text="Please ensure that all the snooker balls are correctly&#x0a;positioned before resetting the score."
                     HorizontalOptions="Center" 
                     FontSize="20"
-                    FontFamily="AnonaThin"
+                    FontFamily="LTSMRegular"
                     FontAttributes="Bold"
                     Margin="15">
                 </Label>
@@ -60,7 +60,7 @@
                     Text="Once reset, all scores will be set to zero.&#x0a;Are you sure you want to reset the game?"
                     HorizontalOptions="Center" 
                     FontSize="15"
-                    FontFamily="AnonaThin"
+                    FontFamily="LTSMRegular"
                     TextColor="#F44336"
                     FontAttributes="Bold"
                     Margin="10">
@@ -77,7 +77,7 @@
                         TextColor="White"
                         Command="{Binding ClosePopupPageCommand}"
                         Margin="20,0,20,20"
-                        FontFamily="AnonaThin"
+                        FontFamily="LTSMRegular"
                         WidthRequest="100">
                     </Button>
 
@@ -88,7 +88,7 @@
                         TextColor="White"
                         Command="{Binding SendResetScoreMessageCommand}"
                         Margin="20,0,20,20"
-                        FontFamily="AnonaThin"
+                        FontFamily="LTSMRegular"
                         WidthRequest="100">
                     </Button>
                 </Grid>

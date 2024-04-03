@@ -16,7 +16,7 @@
                 VerticalOptions="Center"
                 VerticalTextAlignment="Center"
                 FontSize="33"
-                FontFamily="AnonaThin"
+                FontFamily="LTSMRegular"
                 Margin="10,0,0,0">
             </Label>
 
@@ -24,15 +24,15 @@
                 Grid.Column="2"
                 VerticalOptions="Center"
                 VerticalTextAlignment="Center"
-                FontFamily="AnonaThin"
+                FontFamily="LTSMRegular"
                 Margin="10,0,0,0">
                 <Label.FormattedText>
                     <FormattedString>
                         <Span Text="Match Time: "
-                              FontFamily="AnonaThin"
+                              FontFamily="LTSMRegular"
                               FontSize="35"></Span>
                         <Span Text="{Binding FormattedMatchTime}"
-                              FontFamily="AnonaThin"
+                              FontFamily="LTSMRegular"
                               FontSize="35"></Span>
                     </FormattedString>
                 </Label.FormattedText>
@@ -63,7 +63,7 @@
                      BackgroundColor="#1163ff"
                      TextColor="White"
                      MinimumWidthRequest="100"
-                     FontFamily="AnonaThin"
+                     FontFamily="LTSMRegular"
                      IsVisible="{Binding IsButtonVisible}"
                      Command="{Binding ExtractFrameCommand}"/>
         </Grid>
@@ -107,7 +107,7 @@
                     HeightRequest="30"
                     WidthRequest="100"
                     Text="Reset"
-                    FontFamily="AnonaThin"
+                    FontFamily="LTSMRegular"
                     Margin="25">
                 </Button>
 
@@ -119,7 +119,7 @@
                     HeightRequest="30"
                     WidthRequest="100"
                     Text="End Game"
-                    FontFamily="AnonaThin"
+                    FontFamily="LTSMRegular"
                     Margin="25">
                 </Button>
             </Grid>

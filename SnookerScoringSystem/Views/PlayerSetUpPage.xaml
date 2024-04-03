@@ -16,7 +16,7 @@
             VerticalTextAlignment="Center"
             FontSize="33"
             Margin="10,0,0,10"
-            FontFamily="AnonaThin">
+            FontFamily="LTSMRegular">
         </Label>
     </Shell.TitleView>
 
@@ -34,34 +34,34 @@
                     Text="Welcome"
                     HorizontalOptions="Center"
                     FontSize="40"
-                    FontFamily="AnonaThin"></Label>
+                    FontFamily="LTSMRegular"></Label>
                 <Label 
                     Text="Enter nicknames to continue" 
                     Margin="0,20,0,10"
                     FontSize="22"
                     TextColor="#9CA3AF"
-                    FontFamily="AnonaThin"></Label>
+                    FontFamily="LTSMRegular"></Label>
                 <Entry 
                     Margin="0,20,0,0"
                     MinimumWidthRequest="100"
                     MinimumHeightRequest="50"
                     Text="{Binding Player1.Name, Mode=TwoWay}"
                     Placeholder="Player 1"
-                    FontFamily="AnonaThin"></Entry>
+                    FontFamily="LTSMRegular"></Entry>
                 <Entry
                     Margin="0,40,0,0"
                     MinimumWidthRequest="100"
                     MinimumHeightRequest="50"
                     Text="{Binding Player2.Name, Mode=TwoWay}"
                     Placeholder="Player 2"
-                    FontFamily="AnonaThin"></Entry>
+                    FontFamily="LTSMRegular"></Entry>
                 <Button
                     StyleClass="OutlinedButton"
                     Text="Next" 
                     VerticalOptions="End"
                     BackgroundColor="#1163ff" 
                     TextColor="White"
-                    FontFamily="AnonaThin"
+                    FontFamily="LTSMRegular"
                     Margin="0,40,0,0"
                     Command="{Binding AddPlayerCommand}"></Button>
             </VerticalStackLayout>

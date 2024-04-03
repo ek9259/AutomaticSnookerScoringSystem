@@ -42,7 +42,7 @@
                 Text="Are you sure you want to end the game?"
                 HorizontalOptions="Center" 
                 FontSize="20"
-                FontFamily="AnonaThin"
+                FontFamily="LTSMRegular"
                 FontAttributes="Bold"
                 Margin="20">
             </Label>
@@ -59,7 +59,7 @@
                     BackgroundColor="#F44336"
                     TextColor="White"
                     VerticalOptions="End"
-                    FontFamily="AnonaThin"
+                    FontFamily="LTSMRegular"
                     Command="{Binding ClosePopupPageCommand}"
                     Margin="20"
                     WidthRequest="100">
@@ -71,7 +71,7 @@
                     BackgroundColor="#4CAF50"
                     TextColor="White"
                     VerticalOptions="End"
-                    FontFamily="AnonaThin"
+                    FontFamily="LTSMRegular"
                     Command="{Binding SendGoToScoreBoardPageMessageCommand}"
                     Margin="20"
                     WidthRequest="100">

@@ -8,6 +8,6 @@ namespace SnookerScoringSystem.UseCases.Interfaces
 {
     public interface IUpdatePlayerScoreUseCase
     {
-        Task ExecuteAsync(int player1Score, int player2Score);
+        Task ExecuteAsync(int player1Score, int player1Foul, int player2Score, int player2Foul);
     }
 }

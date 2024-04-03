@@ -6,7 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
-using SnookerScoringSystem.Services.Intefaces;
+using SnookerScoringSystem.GameplayServices.Interfaces;
 using SnookerScoringSystem.UseCases.Interfaces;
 using SnookerScoringSystem.Views;
 

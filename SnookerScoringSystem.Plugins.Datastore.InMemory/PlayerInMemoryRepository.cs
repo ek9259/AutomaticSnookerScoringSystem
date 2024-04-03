@@ -54,10 +54,12 @@ namespace SnookerScoringSystem.Plugins.Datastore.InMemory
             return Task.FromResult(_players);
         }
 
-        public Task UpdatePlayerScoreAsync(int player1Score, int player2Score)
+        public Task UpdatePlayerScoreAsync(int player1Score, int player1Foul, int player2Score, int player2Foul)
         {
             _players[0].Score = player1Score;
+            _players[0].Foul = player1Foul;
             _players[1].Score = player2Score;
+            _players[1].Foul = player2Foul;
             return Task.CompletedTask;
         }
 

@@ -25,7 +25,6 @@
 
 	<ItemGroup>
 	  <ProjectReference Include="..\SnookerScoringSystem.Domain\SnookerScoringSystem.Domain.csproj" />
-	  <ProjectReference Include="..\SnookerScoringSystem.Services\SnookerScoringSystem.Services.csproj" />
 	  <ProjectReference Include="..\SnookerScoringSystem.UseCases\SnookerScoringSystem.UseCases.csproj" />
 	</ItemGroup>
 
