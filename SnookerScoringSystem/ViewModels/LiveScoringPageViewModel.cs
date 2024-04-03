@@ -198,10 +198,6 @@ namespace SnookerScoringSystem.ViewModels
             FormattedMatchTime = this._timerService.FormattedMatchTime; 
         }
 
-        public void ResetTimer()
-        {
-            FormattedMatchTime = this._timerService.FormattedMatchTime; 
-        }
         private async Task GoToNextPage()
         {
             try

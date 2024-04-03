@@ -59,7 +59,7 @@ namespace SnookerScoringSystem.Plugins.Datastore.VideoProcessing
                 {
                     Mat frame = new Mat();
                     int frameCount = 0;
-                    int fps = 120;
+                    int fps = 30;
                     int second = 1;
                     while (true)
                     {
@@ -84,7 +84,7 @@ namespace SnookerScoringSystem.Plugins.Datastore.VideoProcessing
                             string filePath = Path.Combine(appDataDirectory, "frame.jpg");
 
                             CvInvoke.Imwrite(filePath, frame);
-                            await Task.Delay(2000);
+                            await Task.Delay(200);
                         }
                         frameCount++;
                     }
