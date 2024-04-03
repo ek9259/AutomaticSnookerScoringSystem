@@ -54,6 +54,7 @@ namespace SnookerScoringSystem.Plugins.Datastore.InMemory
             return Task.FromResult(_players);
         }
 
+        //Update the player score and foul from other components
         public Task UpdatePlayerScoreAsync(int player1Score, int player1Foul, int player2Score, int player2Foul)
         {
             _players[0].Score = player1Score;
@@ -63,10 +64,13 @@ namespace SnookerScoringSystem.Plugins.Datastore.InMemory
             return Task.CompletedTask;
         }
 
+        //Reset player score and foul only
         public Task<List<int>> ResetPlayerScoreAsync()
         {
             _players[0].Score = 0;
+            _players[0].Foul = 0;
             _players[1].Score = 0;
+            _players[1].Foul = 0;
             var playerScores = new List<int>
             {
                 _players[0].Score,
@@ -75,6 +79,7 @@ namespace SnookerScoringSystem.Plugins.Datastore.InMemory
             return Task.FromResult(playerScores);
         }
 
+        //Reset players when restart the game
         public void Reset()
         {
             _players.Clear();
