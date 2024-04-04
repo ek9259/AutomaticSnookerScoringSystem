@@ -39,13 +39,12 @@ namespace SnookerScoringSystem.ViewModels
         private bool _isButtonVisible = true;
 
         [ObservableProperty] 
-        private string _videoSource;
+        private string? _videoSource;
 
         [ObservableProperty] 
-        private string _formattedMatchTime;
+        private string? _formattedMatchTime;
 
 
-        [Obsolete]
         public LiveScoringPageViewModel(IGetPlayerUseCase getPlayerUseCase, IExtractFrameUseCase extractFrameUseCase, 
             IDetectSnookerBallUseCase detectSnookerBallUseCase, IGetVideoPathUseCase getVideoPathUseCase, IPopupNavigation popupNavigation,
             IUpdatePlayerScoreUseCase updatePlayerScoreUseCase, IResetPlayerScoreUseCase resetPlayerScoreUseCase, 
@@ -70,21 +69,7 @@ namespace SnookerScoringSystem.ViewModels
 
             // Subscribe TimUpdated event to execute the UpdateFormmatedMatchTime to change the displaying match time
             this._timerService.TimeUpdated += UpdateFormattedMatchTime;
-
             this._calculateScore = gameManager.StartNewGame();
-
-
-            // Register the ResetPlayerScoreMessage and once received it, execute ResetScore method.
-            WeakReferenceMessenger.Default.Register<ResetPlayerScoreMessage>(this, (r, m) =>
-            {
-                Task.Run(() => ResetScore());
-            });
-
-            // Register the ResetPlayerScoreMessage and once received it, execute ResetScore method.
-            WeakReferenceMessenger.Default.Register<GoToScoreBoardPageMessage>(this, (r, m) =>
-            {
-                Device.InvokeOnMainThreadAsync(async () => await GoToNextPage());
-            });
 
             // Reset the match time to zero before starting the game
             this._timerService.Reset();
@@ -94,6 +79,20 @@ namespace SnookerScoringSystem.ViewModels
             {
                 Task.Run(() => DetectSnookerBall(framePath));
             };
+
+            //Register Messages
+            WeakReferenceMessenger.Default.Register<ResetPlayerScoreMessage>(this, (r, m) =>
+            {
+                Task.Run(() => ResetScore());
+            });            
+            
+            WeakReferenceMessenger.Default.Register<GoToScoreBoardPageMessage>(this, (r, m) =>
+            {
+                MainThread.BeginInvokeOnMainThread(async () =>
+                {
+                    await GoToNextPage();
+                });
+            });
         }
 
         // Update player object to be displayed be getting data from repository
@@ -186,8 +185,8 @@ namespace SnookerScoringSystem.ViewModels
         {
             _detectedBalls = await _detectSnookerBallUseCase.ExecuteAsync(framePath);
 
-            List<int> PlayerScores = await _calculateScore.CalculateScoreAsync(_detectedBalls);
-            await this._updatePlayerScoreUseCase.ExecuteAsync(PlayerScores[0], Player1.Foul, PlayerScores[1], Player2.Foul);
+            List<int> playerScores = await _calculateScore.CalculateScoreAsync(_detectedBalls);
+            await this._updatePlayerScoreUseCase.ExecuteAsync(playerScores[0], Player1.Foul, playerScores[1], Player2.Foul);
         }
 
         // Method to be called when the timer is elapsed with 1 second
