@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace SnookerScoringSystem.GameplayServices.Interfaces
+namespace SnookerScoringSystem.GameplayServices.PluginInterfaces
 {
     public interface ITimerService
     {

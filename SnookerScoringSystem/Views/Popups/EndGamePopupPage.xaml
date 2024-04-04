@@ -22,8 +22,8 @@
     </mopups:PopupPage.Animation>
 
     <Border 
-        WidthRequest="500"
-        HeightRequest="200"
+        WidthRequest="520"
+        HeightRequest="150"
         BackgroundColor="Black">
 
         <Border.StrokeShape>
@@ -62,7 +62,8 @@
                     FontFamily="LTSMRegular"
                     Command="{Binding ClosePopupPageCommand}"
                     Margin="20"
-                    WidthRequest="100">
+                    WidthRequest="100"
+                    HeightRequest="25">
                 </Button>
 
                 <Button
@@ -74,7 +75,8 @@
                     FontFamily="LTSMRegular"
                     Command="{Binding SendGoToScoreBoardPageMessageCommand}"
                     Margin="20"
-                    WidthRequest="100">
+                    WidthRequest="100"
+                    HeightRequest="25">
                 </Button>
             </Grid>
 

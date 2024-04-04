@@ -1,10 +1,5 @@
 ﻿using SnookerScoringSystem.GameplayServices.Interfaces;
-using SnookerScoringSystem.Domain;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using SnookerScoringSystem.GameplayServices.PluginInterfaces;
 
 namespace SnookerScoringSystem.GameplayServices
 {

@@ -7,7 +7,7 @@ using SnookerScoringSystem.Domain.Messages;
 using SnookerScoringSystem.UseCases.Interfaces;
 using SnookerScoringSystem.Views.Popups;
 using SnookerScoringSystem.GameplayServices.Interfaces;
-using SnookerScoringSystem.GameplayServices;
+using SnookerScoringSystem.GameplayServices.PluginInterfaces;
 
 namespace SnookerScoringSystem.ViewModels
 {
@@ -24,8 +24,9 @@ namespace SnookerScoringSystem.ViewModels
 
         private readonly IPopupNavigation _popupNavigation;
         private readonly ITimerService _timerService;
+        private readonly IFrameWatcherService _frameWatcherService;
 
-        private FileSystemWatcher _fileWatcher;
+        //private FileSystemWatcher _fileWatcher;
         private List<DetectedBall> _detectedBalls;
         
         [ObservableProperty]
@@ -48,7 +49,8 @@ namespace SnookerScoringSystem.ViewModels
         public LiveScoringPageViewModel(IGetPlayerUseCase getPlayerUseCase, IExtractFrameUseCase extractFrameUseCase, 
             IDetectSnookerBallUseCase detectSnookerBallUseCase, IGetVideoPathUseCase getVideoPathUseCase, IPopupNavigation popupNavigation,
             IUpdatePlayerScoreUseCase updatePlayerScoreUseCase, IResetPlayerScoreUseCase resetPlayerScoreUseCase, 
-            IStopExtractingFrameUseCase stopExtractingFrameUseCase, ITimerService timerService, IGameManager gameManager)
+            IStopExtractingFrameUseCase stopExtractingFrameUseCase, ITimerService timerService, IGameManager gameManager, 
+            IFrameWatcherService frameWatcherService)
         {
             this._getPlayerUseCase = getPlayerUseCase;
             this._player1 = new Player();
@@ -64,25 +66,37 @@ namespace SnookerScoringSystem.ViewModels
 
             this._popupNavigation = popupNavigation;
             this._timerService = timerService;
+            this._frameWatcherService = frameWatcherService;
 
+            // Subscribe TimUpdated event to execute the UpdateFormmatedMatchTime to change the displaying match time
             this._timerService.TimeUpdated += UpdateFormattedMatchTime;
 
-            _calculateScore = gameManager.StartNewGame();
+            this._calculateScore = gameManager.StartNewGame();
 
+
+            // Register the ResetPlayerScoreMessage and once received it, execute ResetScore method.
             WeakReferenceMessenger.Default.Register<ResetPlayerScoreMessage>(this, (r, m) =>
             {
                 Task.Run(() => ResetScore());
             });
+
+            // Register the ResetPlayerScoreMessage and once received it, execute ResetScore method.
             WeakReferenceMessenger.Default.Register<GoToScoreBoardPageMessage>(this, (r, m) =>
             {
                 Device.InvokeOnMainThreadAsync(async () => await GoToNextPage());
             });
 
+            // Reset the match time to zero before starting the game
             this._timerService.Reset();
-            SetUpFileWatcher();
+
+            // Call method to set up file watcher to keep track the changes of extracted frame
+            this._frameWatcherService.FrameChanged += framePath =>
+            {
+                Task.Run(() => DetectSnookerBall(framePath));
+            };
         }
 
-
+        // Update player object to be displayed be getting data from repository
         public async Task UpdatePlayer()
         {
             var players = await _getPlayerUseCase.ExecuteAsync();
@@ -90,6 +104,8 @@ namespace SnookerScoringSystem.ViewModels
             Player2= players[1];
         }
 
+        // When user  click the start button, start extracting frame, playing video and start timer
+        // Stop timer while the executing frame command is  interrupted or end.
         [RelayCommand]
         private async Task ExtractFrame()
         {
@@ -104,6 +120,8 @@ namespace SnookerScoringSystem.ViewModels
             _timerService.Stop();
         }
 
+
+        // While user click on reset button, pop up to ask user whether they are really want to do that
         [RelayCommand]
         private async Task OpenResetPopupPage()
         {
@@ -117,7 +135,7 @@ namespace SnookerScoringSystem.ViewModels
             }
         }
 
-        
+        // Before ending the game, make sure the user really want to do so by popping up confirmation message
         [RelayCommand]
         private async Task OpenEndGamePopupPage()
         {
@@ -132,6 +150,7 @@ namespace SnookerScoringSystem.ViewModels
         }
 
 
+        // Reset player score and timer
         private async Task ResetScore()
         {
             this._timerService.Reset();
@@ -143,6 +162,7 @@ namespace SnookerScoringSystem.ViewModels
             _calculateScore.ResetScore();
         }
 
+        // Start playing video by setting the video source
         private void PlayVideo()
         {
             try
@@ -155,55 +175,28 @@ namespace SnookerScoringSystem.ViewModels
             }
         }
 
-        private void SetUpFileWatcher()
-        {
-            //Set up the FileSystemWatcher to keep track on the changes of extracted frame
-            _fileWatcher = new FileSystemWatcher();
-            _fileWatcher.Path = Path.Combine(FileSystem.Current.AppDataDirectory);
-            _fileWatcher.Filter = "frame.jpg";
-            _fileWatcher.Changed += OnFrameChanged;
-            _fileWatcher.EnableRaisingEvents = true;
-        }
-
+        // Hide the "Start" button after user clicked it
         private void HideButton()
         {
             IsButtonVisible = false;
         }
 
-
+        // Start detecting snooker ball 
         private async Task DetectSnookerBall(string framePath)
         {
             _detectedBalls = await _detectSnookerBallUseCase.ExecuteAsync(framePath);
 
-            /* int score = 0;
-             foreach (var ball in _detectedBalls)
-             {
-                 if (ball.ClassName == "Red ball")
-                 {
-                     score++;
-                 }
-             }
-             Player1.Score = score;
-
-             await this._updatePlayerScoreUseCase.ExecuteAsync(Player1.Score, Player2.Score); */
             List<int> PlayerScores = await _calculateScore.CalculateScoreAsync(_detectedBalls);
             await this._updatePlayerScoreUseCase.ExecuteAsync(PlayerScores[0], Player1.Foul, PlayerScores[1], Player2.Foul);
         }
 
-        private void OnFrameChanged(object sender, FileSystemEventArgs e)
-        {
-            // Get the path of the new frame
-            string framePath = e.FullPath;
-
-            // Detect the snooker ball
-            Task.Run(() => DetectSnookerBall(framePath));
-        }
-
+        // Method to be called when the timer is elapsed with 1 second
         public void UpdateFormattedMatchTime()
         {
             FormattedMatchTime = this._timerService.FormattedMatchTime; 
         }
 
+        // Redirect to next page, and stop the timer, extracting frame as well as reset calculation
         private async Task GoToNextPage()
         {
             try

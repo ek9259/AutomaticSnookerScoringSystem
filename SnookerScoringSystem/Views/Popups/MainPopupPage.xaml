@@ -22,8 +22,8 @@
     </mopups:PopupPage.Animation>
 
     <Border 
-        WidthRequest="600"
-        HeightRequest="450"
+        WidthRequest="720"
+        HeightRequest="500"
         BackgroundColor="Black">
 
         <Border.StrokeShape>
@@ -34,7 +34,7 @@
 
         <Grid
             Grid.ColumnDefinitions="*, Auto, *"
-            Grid.RowDefinitions="Auto, Auto, Auto">
+            Grid.RowDefinitions="0.2*, 0.6*, 0.2*">
 
             <Label
                 Grid.Row="0"
@@ -65,7 +65,8 @@
                 FontFamily="LTSMRegular"
                 Command="{Binding ClosePopupPageCommand}"
                 Margin="20"
-                WidthRequest="100">
+                WidthRequest="100"
+                HeightRequest="25">
             </Button>
 
         </Grid>

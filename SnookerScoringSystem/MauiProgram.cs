@@ -15,6 +15,7 @@ using SnookerScoringSystem.GameplayServices;
 using SnookerScoringSystem.GameplayServices.Interfaces;
 using SnookerScoringSystem.Views.Popups;
 using UraniumUI;
+using SnookerScoringSystem.GameplayServices.PluginInterfaces;
 
 
 namespace SnookerScoringSystem
@@ -52,7 +53,7 @@ namespace SnookerScoringSystem
             builder.Services.AddTransient<IDetectSnookerBallUseCase, DetectSnookerBallUseCase>();
             builder.Services.AddTransient<IExtractFrameUseCase, ExtractFrameUseCase>();
             builder.Services.AddTransient<ICalculateScore, CalculateScore>();
-            builder.Services.AddTransient<IGameManager, GameManager>();
+
             builder.Services.AddTransient<IGetVideoPathUseCase, GetVideoPathUseCase>();
             builder.Services.AddTransient<IUpdatePlayerScoreUseCase, UpdatePlayerScoreUseCase>();
             builder.Services.AddTransient<IResetPlayerScoreUseCase, ResetPlayerScoreUseCase>();
@@ -60,6 +61,8 @@ namespace SnookerScoringSystem
             builder.Services.AddTransient<IResetPlayersUseCase, ResetPlayersUseCase>();
 
             builder.Services.AddSingleton<ITimerService, TimerService>();
+            builder.Services.AddTransient<IFrameWatcherService, FrameWatcherService>();
+            builder.Services.AddTransient<IGameManager, GameManager>();
 
             // Registering the view models and views with the dependency injection container.
             builder.Services.AddSingleton<PlayerSetUpPageViewModel>();
