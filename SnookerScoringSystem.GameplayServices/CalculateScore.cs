@@ -3,9 +3,9 @@ using SnookerScoringSystem.Domain;
 using SnookerScoringSystem.UseCases.Interfaces;
 using SnookerScoringSystem.UseCases.PluginInterfaces;
 
-using Player = SnookerScoringSystem.Domain.Player;
 using Microsoft.Maui.Controls;
 using System.Runtime.CompilerServices;
+using SnookerScoringSystem.UseCases;
 
 namespace SnookerScoringSystem.GameplayServices
 {
@@ -13,7 +13,14 @@ namespace SnookerScoringSystem.GameplayServices
 
     public partial class CalculateScore : ICalculateScore
     {
-            private enum BallColour
+        private readonly IUpdatePlayerScoreUseCase _updatePlayerScoreUseCase;
+
+        public CalculateScore(IUpdatePlayerScoreUseCase updatePlayerScoreUseCase)
+        {
+            this._updatePlayerScoreUseCase = updatePlayerScoreUseCase;
+        }
+
+        private enum BallColour
             {
                 Redball = 0,
                 Yellowball = 1,
@@ -34,6 +41,7 @@ namespace SnookerScoringSystem.GameplayServices
 
         //Global Variable Initialization
             public List<int> PlayersScores = [ 0, 0 ];
+            public List<int> PlayersFouls = [ 0, 0 ];
             int[] BallScores = { 1, 2, 3, 4, 4, 5, 6, 7 };
             private bool[] IsBallPocketed = { false, false, false, false, false, false, false, false };
             private int CurrentRedBallAmount = 15;
@@ -46,9 +54,10 @@ namespace SnookerScoringSystem.GameplayServices
             private bool ResetingScore = false;
             private Dictionary<DetectedBall, BallLocation> LastLocationInfo = new();
 
-            public void ResetScore()
+            public void Reset()
             {
                 PlayersScores = [0, 0];
+                PlayersFouls = [0, 0];
                 for (int i = 0; i < 8; i++)
                 {
                     IsBallPocketed[i] = false;
@@ -64,7 +73,7 @@ namespace SnookerScoringSystem.GameplayServices
                 LastLocationInfo.Clear();
             }
 
-            public async Task <List<int>> CalculateScoreAsync(List<DetectedBall> detectedBalls)
+            public async Task CalculateScoreAsync(List<DetectedBall> detectedBalls)
             {
             if (!ResetingScore)
             {
@@ -115,10 +124,12 @@ namespace SnookerScoringSystem.GameplayServices
                 {
                     LastLocationInfo.Add(Obj, new BallLocation(Obj.X, Obj.Y));
                 }
-                return PlayersScores;
+                await this._updatePlayerScoreUseCase.ExecuteAsync(PlayersScores[0], PlayersFouls[0], PlayersScores[1], PlayersFouls[1]);
+                return;
             }
             ResetingScore = false;
-            return PlayersScores;
+            await this._updatePlayerScoreUseCase.ExecuteAsync(0, 0, 0, 0);
+            return;
             }
 
             //Threshold for the ball location differences.
@@ -311,6 +322,7 @@ namespace SnookerScoringSystem.GameplayServices
                 private void CheckFouling(Fouling FoulingType, int Score)
                 {
                     FoulingTurn = true;
+                    PlayersFouls[PlayerTurn] += 1;
                     switch (FoulingType)
                     {
                         /*Fouling 1: FoulStroke

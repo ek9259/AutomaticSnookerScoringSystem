@@ -11,7 +11,7 @@ namespace SnookerScoringSystem.GameplayServices.Interfaces
 {
     public interface ICalculateScore
     {
-        void ResetScore();
-        Task <List<int>> CalculateScoreAsync(List<DetectedBall> detectedBalls);
+        void Reset();
+        Task CalculateScoreAsync(List<DetectedBall> detectedBalls);
     }
 }

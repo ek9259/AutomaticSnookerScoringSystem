@@ -7,6 +7,8 @@ using System.Threading.Tasks;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using SnookerScoringSystem.GameplayServices.PluginInterfaces;
+using SnookerScoringSystem.Domain.Messages;
+using CommunityToolkit.Mvvm.Messaging;
 using SnookerScoringSystem.UseCases.Interfaces;
 using SnookerScoringSystem.Views;
 
@@ -40,9 +42,12 @@ namespace SnookerScoringSystem.ViewModels
             this._resetPlayersUseCase = resetPlayersUseCase;
             this._timerService = timerService;
 
-            FormattedMatchTime = this._timerService.FormattedMatchTime;
-            Task.Run(() => GetPlayers());
-        }
+            WeakReferenceMessenger.Default.Register<OpeningScoreBoardPageMessage>(this, (r, m) =>
+            {
+                Task.Run(() => GetPlayers());
+                FormattedMatchTime = this._timerService.FormattedMatchTime;
+            });
+        }      
 
         [RelayCommand]
         private async Task StartNewGame()

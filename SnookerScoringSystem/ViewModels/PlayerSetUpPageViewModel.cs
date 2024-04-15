@@ -12,7 +12,7 @@ namespace SnookerScoringSystem.ViewModels
     {
         private readonly IAddPlayerUseCase _addPlayerUseCase;
         private readonly IPopupNavigation _popupNavigation;
-
+     
         [ObservableProperty]
         private Player? _player1;
 
