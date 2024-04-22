@@ -9,6 +9,7 @@ using SnookerScoringSystem.UseCases.Interfaces;
 using SnookerScoringSystem.Views.Popups;
 using SnookerScoringSystem.GameplayServices.Interfaces;
 using SnookerScoringSystem.GameplayServices.PluginInterfaces;
+using System.Drawing.Text;
 using Camera.MAUI;
 
 namespace SnookerScoringSystem.ViewModels
@@ -56,6 +57,8 @@ namespace SnookerScoringSystem.ViewModels
             IStopExtractingFrameUseCase stopExtractingFrameUseCase, ITimerService timerService, IGameManager gameManager, 
             IFrameWatcherService frameWatcherService)
         {
+            
+
             this._getPlayerUseCase = getPlayerUseCase;
             this._player1 = new Player();
             this._player2 = new Player();
@@ -74,7 +77,7 @@ namespace SnookerScoringSystem.ViewModels
 
             // Subscribe TimUpdated event to execute the UpdateFormmatedMatchTime to change the displaying match time
             this._timerService.TimeUpdated += UpdateFormattedMatchTime;
-            this._calculateScore = gameManager.StartNewGame();
+            this._calculateScore = gameManager.StartNewGame(updatePlayerScoreUseCase);
 
             // Reset the match time to zero before starting the game
             this._timerService.Reset();
@@ -164,7 +167,7 @@ namespace SnookerScoringSystem.ViewModels
             var playerScore = await this._resetPlayerScoreUseCase.ExecuteAsync();
             Player1.Score = playerScore[0];
             Player2.Score = playerScore[1];
-            _calculateScore.ResetScore();
+            _calculateScore.Reset();
         }
 
         // Start playing video by setting the preloaded video source
@@ -192,8 +195,7 @@ namespace SnookerScoringSystem.ViewModels
         {
             _detectedBalls = await _detectSnookerBallUseCase.ExecuteAsync(framePath);
 
-            List<int> playerScores = await _calculateScore.CalculateScoreAsync(_detectedBalls);
-            await this._updatePlayerScoreUseCase.ExecuteAsync(playerScores[0], Player1.Foul, playerScores[1], Player2.Foul);
+            await _calculateScore.CalculateScoreAsync(_detectedBalls);
         }
 
         // Method to be called when the timer is elapsed with 1 second
@@ -214,9 +216,10 @@ namespace SnookerScoringSystem.ViewModels
 
                 this._stopExtractingFrameUseCase.Execute();
                 this._timerService.Stop();
-                _calculateScore.ResetScore();
+                _calculateScore.Reset();
                 VideoSource = "";
                 await Shell.Current.GoToAsync($"{nameof(ScoreBoardPage)}");
+                WeakReferenceMessenger.Default.Send(new OpeningScoreBoardPageMessage("OpeningScoreBoard Event"));
             }
             catch (Exception ex)
             {
