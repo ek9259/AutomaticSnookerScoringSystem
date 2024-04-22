@@ -1,4 +1,5 @@
-﻿using CommunityToolkit.Mvvm.ComponentModel;
+﻿using System.Collections.ObjectModel;
+using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using CommunityToolkit.Mvvm.Messaging;
 using Mopups.Interfaces;
@@ -9,6 +10,7 @@ using SnookerScoringSystem.Views.Popups;
 using SnookerScoringSystem.GameplayServices.Interfaces;
 using SnookerScoringSystem.GameplayServices.PluginInterfaces;
 using System.Drawing.Text;
+using Camera.MAUI;
 
 namespace SnookerScoringSystem.ViewModels
 {
@@ -44,6 +46,9 @@ namespace SnookerScoringSystem.ViewModels
 
         [ObservableProperty] 
         private string? _formattedMatchTime;
+
+        [ObservableProperty] 
+        private bool _shouldPlayVideo = false;
 
 
         public LiveScoringPageViewModel(IGetPlayerUseCase getPlayerUseCase, IExtractFrameUseCase extractFrameUseCase, 
@@ -111,7 +116,8 @@ namespace SnookerScoringSystem.ViewModels
         [RelayCommand]
         private async Task ExtractFrame()
         {
-            PlayVideo();
+            //PlayVideo();
+            ShouldPlayVideo = true;
             HideButton();
 
             FormattedMatchTime = this._timerService.FormattedMatchTime;
@@ -164,7 +170,7 @@ namespace SnookerScoringSystem.ViewModels
             _calculateScore.Reset();
         }
 
-        // Start playing video by setting the video source
+        // Start playing video by setting the preloaded video source
         private void PlayVideo()
         {
             try
@@ -176,6 +182,7 @@ namespace SnookerScoringSystem.ViewModels
                 throw new Exception("An error occurred while loading the video", ex);
             }
         }
+
 
         // Hide the "Start" button after user clicked it
         private void HideButton()
