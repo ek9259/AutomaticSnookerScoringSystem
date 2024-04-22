@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.Logging;
+﻿using Camera.MAUI;
+using Microsoft.Extensions.Logging;
 using SnookerScoringSystem.UseCases.PluginInterfaces;
 using SnookerScoringSystem.Views;
 using SnookerScoringSystem.Plugins.Datastore.InMemory;
@@ -30,6 +31,7 @@ namespace SnookerScoringSystem
                 .UseMauiCommunityToolkitMediaElement()
                 .UseUraniumUI()
                 .UseUraniumUIMaterial()
+                .UseMauiCameraView()
                 .ConfigureMopups()
                 .ConfigureFonts(fonts =>
                 {
@@ -47,7 +49,8 @@ namespace SnookerScoringSystem
             // Registering the necessary services with the dependency injection container.
             builder.Services.AddSingleton<IPlayerRepository, PlayerInMemoryRepository>();
             builder.Services.AddSingleton<ISnookerDetectionModelRepository, ModelRepository>();
-            builder.Services.AddSingleton<IVideoProcessingRepository, VideoProcessingRepository>();
+            //builder.Services.AddSingleton<IVideoProcessingRepository, VideoProcessingRepository>();
+            builder.Services.AddSingleton<IVideoProcessingRepository, LiveVideoCaptureService>();
             builder.Services.AddTransient<IAddPlayerUseCase, AddPlayerUseCase>();
             builder.Services.AddTransient<IGetPlayerUseCase, GetPlayerUseCase>();
             builder.Services.AddTransient<IDetectSnookerBallUseCase, DetectSnookerBallUseCase>();

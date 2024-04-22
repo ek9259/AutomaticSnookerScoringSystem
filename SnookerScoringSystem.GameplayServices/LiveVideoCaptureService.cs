@@ -1,48 +1,26 @@
-﻿using System.Reflection;
-using Emgu.CV;
-using Emgu.CV.Util;
+﻿using Emgu.CV;
 using SnookerScoringSystem.UseCases.PluginInterfaces;
 
-namespace SnookerScoringSystem.Plugins.Datastore.VideoProcessing
+namespace SnookerScoringSystem.GameplayServices
 {
-    // All the code in this file is included in all platforms.
-    public class VideoProcessingRepository :IVideoProcessingRepository
+    public class LiveVideoCaptureService : IVideoProcessingRepository
     {
-        private readonly VideoCapture _snookerVideo;
-        private readonly string _videoPath;
-
+        private VideoCapture _videoCapture;
+        
         private CancellationTokenSource _cancellationTokenSource;
 
-        //Creating video capture object by passing the path to video
-        public VideoProcessingRepository()
+        public LiveVideoCaptureService()
         {
             try
             {
-                // Get the path to the video file
-                _videoPath = GetVideoPath();
-                _snookerVideo = new VideoCapture(_videoPath);
+                // Access video from camera
+                this._videoCapture = new VideoCapture(0);
             }
             catch (Exception ex)
             {
-                throw new Exception($"An error occurred while accessing the video: {ex.Message}", ex);
+                throw new Exception($"An error occurred while accessing the camera: {ex.Message}", ex);
             }
-
         }
-
-        //Find the path to video file
-        public string GetVideoPath()
-        {
-            var videoPath = Path.Combine(AppContext.BaseDirectory, "Videos", "Snooker_Video.mp4");
-
-            if (!File.Exists(videoPath))
-            {
-                throw new FileNotFoundException($"The video file cannot be found at path: {videoPath}");
-            }
-
-            return videoPath;
-    }
-
-        //Extract frame function
         public async Task ExtractFrameAsync()
         {
             if (_cancellationTokenSource != null)
@@ -55,20 +33,20 @@ namespace SnookerScoringSystem.Plugins.Datastore.VideoProcessing
 
             await Task.Run(async () =>
             {
-                if (_snookerVideo.IsOpened)
+                if (this._videoCapture.IsOpened)
                 {
-                    Mat frame = new Mat();
                     int frameCount = 0;
                     int fps = 30;
                     int second = 1;
                     while (true)
                     {
+                        Mat frame = this._videoCapture.QueryFrame();
                         if (_cancellationTokenSource.Token.IsCancellationRequested)
                         {
                             break;
                         }
 
-                        _snookerVideo.Read(frame);
+                        //this._videoCapture.Read(frame);
 
                         if (frame.IsEmpty)
                         {
@@ -89,8 +67,21 @@ namespace SnookerScoringSystem.Plugins.Datastore.VideoProcessing
                         frameCount++;
                     }
                 }
-            });
+            }); 
         }
+
+        public string GetVideoPath()
+        {
+            var videoPath = Path.Combine(AppContext.BaseDirectory, "Videos", "Snooker_Video.mp4");
+
+            if (!File.Exists(videoPath))
+            {
+                throw new FileNotFoundException($"The video file cannot be found at path: {videoPath}");
+            }
+
+            return videoPath;
+        }
+         
         public void StopExtractingFrame()
         {
             if (_cancellationTokenSource != null)
