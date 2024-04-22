@@ -50,14 +50,14 @@
               RowDefinitions="*, *, *">
 
             <!-- Video Player -->
-            <!--<toolkit:MediaElement x:Name="mediaElement"
+            <toolkit:MediaElement x:Name="mediaElement"
                                   Grid.RowSpan="3" 
                                   ShouldAutoPlay="True" 
                                   ShouldShowPlaybackControls="False"
-                                  Source="{Binding VideoSource}"/>-->
-            <cv:CameraView x:Name="cameraView" 
+                                  Source="{Binding VideoSource}"/>
+            <!--<cv:CameraView x:Name="cameraView" 
                            Grid.RowSpan="3"
-                           AutoStartPreview="{Binding ShouldPlayVideo}"/>
+                           AutoStartPreview="{Binding ShouldPlayVideo}"/>-->
 
             <!-- Button in the middle -->
             <Button  Grid.Row="1" 
