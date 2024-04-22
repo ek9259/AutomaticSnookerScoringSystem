@@ -11,4 +11,11 @@ public partial class ScoreBoardPage : ContentPage
         this._scoreBoardPageViewModel = scoreBoardPageViewModel;
         BindingContext = this._scoreBoardPageViewModel;
     }
+
+    protected override async void OnAppearing()
+    {
+        base.OnAppearing();
+        await this._scoreBoardPageViewModel.GetPlayers();
+        this._scoreBoardPageViewModel.UpdateMatchTime();
+    }
 }

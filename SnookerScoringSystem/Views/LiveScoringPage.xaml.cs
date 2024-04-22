@@ -16,7 +16,7 @@ public partial class LiveScoringPage : ContentPage
         this._popupNavigation = popupNavigation;
         BindingContext = this._liveScoringPageViewModel;
 
-        cameraView.CamerasLoaded += CameraView_CamerasLoaded;
+        //cameraView.CamerasLoaded += CameraView_CamerasLoaded;
     }
 
 
@@ -26,15 +26,17 @@ public partial class LiveScoringPage : ContentPage
         base.OnAppearing();
 
         await _popupNavigation.PushAsync(new MainPopupPage(new MainPopupPageViewModel()));
+
+        // Update players data and reset match time while loading the page
         await this._liveScoringPageViewModel.UpdatePlayer();
         this._liveScoringPageViewModel.UpdateFormattedMatchTime();
     }
 
-    private void CameraView_CamerasLoaded(object sender, EventArgs e)
-    {
-        if (cameraView.NumCamerasDetected > 0)
-        {
-            cameraView.Camera = cameraView.Cameras.First();
-        }
-    }
+    //private void CameraView_CamerasLoaded(object sender, EventArgs e)
+    //{
+    //    if (cameraView.NumCamerasDetected > 0)
+    //    {
+    //        cameraView.Camera = cameraView.Cameras.First();
+    //    }
+    //}
 }

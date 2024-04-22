@@ -116,7 +116,7 @@ namespace SnookerScoringSystem.ViewModels
         [RelayCommand]
         private async Task ExtractFrame()
         {
-            //PlayVideo();
+            PlayVideo();
             ShouldPlayVideo = true;
             HideButton();
 
@@ -219,7 +219,6 @@ namespace SnookerScoringSystem.ViewModels
                 _calculateScore.Reset();
                 VideoSource = "";
                 await Shell.Current.GoToAsync($"{nameof(ScoreBoardPage)}");
-                WeakReferenceMessenger.Default.Send(new OpeningScoreBoardPageMessage("OpeningScoreBoard Event"));
             }
             catch (Exception ex)
             {

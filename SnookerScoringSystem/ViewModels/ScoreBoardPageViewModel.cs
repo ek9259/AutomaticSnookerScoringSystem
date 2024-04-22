@@ -41,12 +41,6 @@ namespace SnookerScoringSystem.ViewModels
             this._getPlayerUseCase = getPlayerUseCase;
             this._resetPlayersUseCase = resetPlayersUseCase;
             this._timerService = timerService;
-
-            WeakReferenceMessenger.Default.Register<OpeningScoreBoardPageMessage>(this, (r, m) =>
-            {
-                Task.Run(() => GetPlayers());
-                FormattedMatchTime = this._timerService.FormattedMatchTime;
-            });
         }      
 
         [RelayCommand]
@@ -64,7 +58,12 @@ namespace SnookerScoringSystem.ViewModels
             }
         }
 
-        private async Task GetPlayers()
+        public void UpdateMatchTime()
+        {
+            FormattedMatchTime = this._timerService.FormattedMatchTime;
+        }
+
+        public async Task GetPlayers()
         {
             var players = await this._getPlayerUseCase.ExecuteAsync();
             Player1Score = players[0].Score;
