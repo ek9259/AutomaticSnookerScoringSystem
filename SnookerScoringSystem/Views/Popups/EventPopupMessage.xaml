@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<mopups:PopupPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:mopups="clr-namespace:Mopups.Pages;assembly=Mopups"
+             xmlns:mopupsanim="clr-namespace:Mopups.Animations;assembly=Mopups"
+             x:Class="SnookerScoringSystem.Views.Popups.EventPopupMessage"
+             Title="EventPopupMessage">
+
+    <mopups:PopupPage.Animation>
+        <mopupsanim:ScaleAnimation
+            DurationIn="500"
+            EasingIn="BounceOut"
+            PositionIn="Center"
+            PositionOut="Center"
+            ScaleIn="0.7"
+            ScaleOut="0.7"
+        ></mopupsanim:ScaleAnimation>
+    </mopups:PopupPage.Animation>
+
+    <Border 
+        WidthRequest="550"
+        HeightRequest="60"
+        BackgroundColor="#B9272727"
+        HorizontalOptions="Start"
+        VerticalOptions="End"
+        Margin="5">
+
+        <Border.StrokeShape>
+            <RoundRectangle
+                CornerRadius="10, 10, 10, 10">
+            </RoundRectangle>
+        </Border.StrokeShape>
+
+        <Label
+            VerticalOptions="Center"
+            VerticalTextAlignment="Center"
+            HorizontalOptions="Center"
+            FontFamily="LTSMRegular"
+            Margin="10,10,10,10"
+            FontSize="20"
+            TextColor="White"
+            Text="Player 1 has pocketed the red ball, earning 1 point(s)!">
+        </Label>
+
+    </Border>
+</mopups:PopupPage>
