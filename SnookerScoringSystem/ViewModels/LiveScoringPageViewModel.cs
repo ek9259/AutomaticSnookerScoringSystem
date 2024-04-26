@@ -9,8 +9,6 @@ using SnookerScoringSystem.UseCases.Interfaces;
 using SnookerScoringSystem.Views.Popups;
 using SnookerScoringSystem.GameplayServices.Interfaces;
 using SnookerScoringSystem.GameplayServices.PluginInterfaces;
-using System.Drawing.Text;
-using Camera.MAUI;
 
 namespace SnookerScoringSystem.ViewModels
 {
@@ -45,6 +43,9 @@ namespace SnookerScoringSystem.ViewModels
         private string? _videoSource;
 
         [ObservableProperty] 
+        private string? _imageSource;
+
+        [ObservableProperty] 
         private string? _formattedMatchTime;
 
         [ObservableProperty] 
@@ -57,7 +58,6 @@ namespace SnookerScoringSystem.ViewModels
             IStopExtractingFrameUseCase stopExtractingFrameUseCase, ITimerService timerService, IGameManager gameManager, 
             IFrameWatcherService frameWatcherService)
         {
-            
 
             this._getPlayerUseCase = getPlayerUseCase;
             this._player1 = new Player();
@@ -116,15 +116,17 @@ namespace SnookerScoringSystem.ViewModels
         [RelayCommand]
         private async Task ExtractFrame()
         {
-            PlayVideo();
-            ShouldPlayVideo = true;
+
             HideButton();
 
             FormattedMatchTime = this._timerService.FormattedMatchTime;
             this._timerService.Start();
 
-            await this._extractFrameUseCase.ExecuteAsync();
+            await _popupNavigation.PushAsync(new EventPopupMessage());
 
+            //PlayVideo();
+
+            await this._extractFrameUseCase.ExecuteAsync();
             _timerService.Stop();
         }
 

@@ -93,6 +93,9 @@
 	  <Compile Update="Views\PlayerSetUpPage.xaml.cs">
 	    <DependentUpon>PlayerSetUpPage.xaml</DependentUpon>
 	  </Compile>
+	  <Compile Update="Views\Popups\EventPopupMessage.xaml.cs">
+	    <DependentUpon>EventPopupMessage.xaml</DependentUpon>
+	  </Compile>
 	  <Compile Update="Views\ScoreBoardPage.xaml.cs">
 	    <DependentUpon>ScoreBoardPage.xaml</DependentUpon>
 	  </Compile>
@@ -103,6 +106,9 @@
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	  <MauiXaml Update="Views\PlayerSetUpPage.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Views\Popups\EventPopupMessage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	  <MauiXaml Update="Views\Popups\EndGamePopupPage.xaml">

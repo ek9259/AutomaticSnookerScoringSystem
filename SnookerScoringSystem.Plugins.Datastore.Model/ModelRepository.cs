@@ -20,6 +20,8 @@ namespace SnookerScoringSystem.Plugins.Datastore.Model
             {
                 _modelPath = GetModelPath();
                 _predictor = YoloV8Predictor.Create(_modelPath );
+
+
             }
             catch (Exception ex)
             {
@@ -40,6 +42,7 @@ namespace SnookerScoringSystem.Plugins.Datastore.Model
             return modelPath;
         }
 
+
         //Ball detection function, pass an image to predictor
         public async Task<List<DetectedBall>> DetectSnookerBallAsync(string framePath)
         {
@@ -56,7 +59,6 @@ namespace SnookerScoringSystem.Plugins.Datastore.Model
 
             try
             {
-                var stopwatch = Stopwatch.StartNew();
                 var results = await _predictor.DetectAsync(framePath);
                 var detectedBalls = new List<DetectedBall>();
 
@@ -72,9 +74,6 @@ namespace SnookerScoringSystem.Plugins.Datastore.Model
                         Height = result.Bounds.Height
                     });
                 }
-
-                stopwatch.Stop();
-                var elapsedTime = stopwatch.Elapsed;
                 
 
                 return detectedBalls;

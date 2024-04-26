@@ -1,5 +1,6 @@
 ﻿using System.Reflection;
 using Emgu.CV;
+using Emgu.CV.CvEnum;
 using Emgu.CV.Util;
 using SnookerScoringSystem.UseCases.PluginInterfaces;
 
@@ -58,9 +59,11 @@ namespace SnookerScoringSystem.Plugins.Datastore.VideoProcessing
                 if (_snookerVideo.IsOpened)
                 {
                     Mat frame = new Mat();
-                    int frameCount = 0;
-                    int fps = 30;
-                    int second = 1;
+                    double frameCount = 0;
+                    double fps = this._snookerVideo.Get(CapProp.Fps);
+                    //How many frame extracted per seconds
+                    double frequency = 6;
+
                     while (true)
                     {
                         if (_cancellationTokenSource.Token.IsCancellationRequested)
@@ -75,7 +78,7 @@ namespace SnookerScoringSystem.Plugins.Datastore.VideoProcessing
                             break;
                         }
 
-                        if (frameCount % fps == 0)
+                        if (frameCount % (fps / frequency) == 0)
                         {
                             // Get the AppData directory path
                             string appDataDirectory = FileSystem.Current.AppDataDirectory;
@@ -84,7 +87,7 @@ namespace SnookerScoringSystem.Plugins.Datastore.VideoProcessing
                             string filePath = Path.Combine(appDataDirectory, "frame.jpg");
 
                             CvInvoke.Imwrite(filePath, frame);
-                            await Task.Delay(200);
+                            //await Task.Delay(100);
                         }
                         frameCount++;
                     }

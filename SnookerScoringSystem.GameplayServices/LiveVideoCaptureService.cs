@@ -1,26 +1,28 @@
 ﻿using Emgu.CV;
+using Emgu.CV.CvEnum;
 using SnookerScoringSystem.UseCases.PluginInterfaces;
 
 namespace SnookerScoringSystem.GameplayServices
 {
     public class LiveVideoCaptureService : IVideoProcessingRepository
     {
-        private VideoCapture _videoCapture;
+        private VideoCapture? _videoCapture;
+
+        //private VideoWriter _writer;
         
-        private CancellationTokenSource _cancellationTokenSource;
+        private CancellationTokenSource? _cancellationTokenSource;
+
+        private string _appDataDirectory;
+
+        private string _liveVideoCapturePath;
 
         public LiveVideoCaptureService()
         {
-            try
-            {
-                // Access video from camera
-                this._videoCapture = new VideoCapture(0);
-            }
-            catch (Exception ex)
-            {
-                throw new Exception($"An error occurred while accessing the camera: {ex.Message}", ex);
-            }
+            SettingUpVideoCapture();
+            // Get the AppData directory path
+            _appDataDirectory = FileSystem.Current.AppDataDirectory;
         }
+
         public async Task ExtractFrameAsync()
         {
             if (_cancellationTokenSource != null)
@@ -35,44 +37,63 @@ namespace SnookerScoringSystem.GameplayServices
             {
                 if (this._videoCapture.IsOpened)
                 {
-                    int frameCount = 0;
-                    int fps = 30;
-                    int second = 1;
+                    Mat frame = new Mat();
+                    double frameCount = 0;
+                    double fps = this._videoCapture.Get(CapProp.Fps);
+
+                    //How many frame extracted per seconds
+                    double frequency = 6;
+
                     while (true)
                     {
-                        Mat frame = this._videoCapture.QueryFrame();
                         if (_cancellationTokenSource.Token.IsCancellationRequested)
                         {
                             break;
                         }
 
-                        //this._videoCapture.Read(frame);
+                        this._videoCapture.Read(frame);
 
                         if (frame.IsEmpty)
                         {
                             break;
                         }
 
-                        if (frameCount % fps == 0)
+                        if (frameCount % (fps / frequency) == 0)
                         {
-                            // Get the AppData directory path
-                            string appDataDirectory = FileSystem.Current.AppDataDirectory;
-
                             // Create the full file path
-                            string filePath = Path.Combine(appDataDirectory, "frame.jpg");
+                            string filePath = Path.Combine(_appDataDirectory, "frame.jpg");
 
                             CvInvoke.Imwrite(filePath, frame);
-                            await Task.Delay(200);
+
+                            await Task.Delay(100);
                         }
+
                         frameCount++;
                     }
                 }
             }); 
         }
 
+        private void SettingUpVideoCapture()
+        {
+            try
+            {
+                if (_videoCapture == null)
+                {
+                    // Access video from camera
+                    this._videoCapture = new VideoCapture(0);
+                }
+                _videoCapture.Start();
+            }
+            catch (Exception ex)
+            {
+                throw new Exception($"An error occurred while accessing the camera: {ex.Message}", ex);
+            }
+        }
+
         public string GetVideoPath()
         {
-            var videoPath = Path.Combine(AppContext.BaseDirectory, "Videos", "Snooker_Video.mp4");
+            var videoPath = this._liveVideoCapturePath;
 
             if (!File.Exists(videoPath))
             {
@@ -88,6 +109,8 @@ namespace SnookerScoringSystem.GameplayServices
             {
                 _cancellationTokenSource.Cancel();
             }
+            this._videoCapture.Stop();
+            this._videoCapture = null;
         }
     }
 }
