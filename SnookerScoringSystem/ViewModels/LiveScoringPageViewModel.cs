@@ -26,6 +26,7 @@ namespace SnookerScoringSystem.ViewModels
         private readonly IPopupNavigation _popupNavigation;
         private readonly ITimerService _timerService;
         private readonly IFrameWatcherService _frameWatcherService;
+        private readonly SemaphoreSlim _semaphore = new SemaphoreSlim(1, 1);
 
         //private FileSystemWatcher _fileWatcher;
         private List<DetectedBall> _detectedBalls;
@@ -124,7 +125,7 @@ namespace SnookerScoringSystem.ViewModels
 
             await _popupNavigation.PushAsync(new EventPopupMessage());
 
-            //PlayVideo();
+            PlayVideo();
 
             await this._extractFrameUseCase.ExecuteAsync();
             _timerService.Stop();
@@ -195,9 +196,16 @@ namespace SnookerScoringSystem.ViewModels
         // Start detecting snooker ball 
         private async Task DetectSnookerBall(string framePath)
         {
-            _detectedBalls = await _detectSnookerBallUseCase.ExecuteAsync(framePath);
-
-            await _calculateScore.CalculateScoreAsync(_detectedBalls);
+            await _semaphore.WaitAsync();
+            try
+            {
+                _detectedBalls = await _detectSnookerBallUseCase.ExecuteAsync(framePath);
+                await _calculateScore.CalculateScoreAsync(_detectedBalls);
+            }
+            finally
+            {
+                _semaphore.Release();
+            }
         }
 
         // Method to be called when the timer is elapsed with 1 second

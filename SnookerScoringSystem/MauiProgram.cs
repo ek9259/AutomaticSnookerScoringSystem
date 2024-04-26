@@ -49,8 +49,8 @@ namespace SnookerScoringSystem
             // Registering the necessary services with the dependency injection container.
             builder.Services.AddSingleton<IPlayerRepository, PlayerInMemoryRepository>();
             builder.Services.AddSingleton<ISnookerDetectionModelRepository, ModelRepository>();
-            //builder.Services.AddSingleton<IVideoProcessingRepository, VideoProcessingRepository>();
-            builder.Services.AddSingleton<IVideoProcessingRepository, LiveVideoCaptureService>();
+            builder.Services.AddSingleton<IVideoProcessingRepository, VideoProcessingRepository>();
+            //builder.Services.AddSingleton<IVideoProcessingRepository, LiveVideoCaptureService>();
             builder.Services.AddTransient<IAddPlayerUseCase, AddPlayerUseCase>();
             builder.Services.AddTransient<IGetPlayerUseCase, GetPlayerUseCase>();
             builder.Services.AddTransient<IDetectSnookerBallUseCase, DetectSnookerBallUseCase>();
