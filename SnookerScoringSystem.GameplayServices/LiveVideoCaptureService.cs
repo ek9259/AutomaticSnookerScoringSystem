@@ -64,8 +64,6 @@ namespace SnookerScoringSystem.GameplayServices
                             string filePath = Path.Combine(_appDataDirectory, "frame.jpg");
 
                             CvInvoke.Imwrite(filePath, frame);
-
-                            await Task.Delay(100);
                         }
 
                         frameCount++;
