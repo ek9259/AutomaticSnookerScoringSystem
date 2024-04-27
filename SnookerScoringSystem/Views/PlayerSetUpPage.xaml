@@ -2,8 +2,6 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:vm="clr-namespace:SnookerScoringSystem.ViewModels"
-             xmlns:material="http://schemas.enisn-projects.io/dotnet/maui/uraniumui/material"
-             xmlns:uranium="http://schemas.enisn-projects.io/dotnet/maui/uraniumui"
              x:Class="SnookerScoringSystem.Views.PlayerSetUpPage"
              x:DataType="vm:PlayerSetUpPageViewModel"
              BackgroundImageSource="background_image.png">
@@ -55,15 +53,44 @@
                     Text="{Binding Player2.Name, Mode=TwoWay}"
                     Placeholder="Player 2"
                     FontFamily="LTSMRegular"></Entry>
+
                 <Button
                     StyleClass="OutlinedButton"
                     Text="Next" 
+                    FontSize="20"
+                    IsVisible="{Binding IsButtonVisible}"
                     VerticalOptions="End"
                     BackgroundColor="#1163ff" 
                     TextColor="White"
                     FontFamily="LTSMRegular"
                     Margin="0,40,0,0"
-                    Command="{Binding AddPlayerCommand}"></Button>
+                    Command="{Binding AddPlayerCommand}"
+                    HeightRequest="50"></Button>
+
+
+                <Frame
+                    BackgroundColor="#1163ff"
+                    Margin="0,40,0,0"
+                    HeightRequest="50"
+                    IsVisible="{Binding IsIndicatorVisible}"
+                    Padding="0">
+                    <HorizontalStackLayout 
+                        HorizontalOptions="Center"
+                        Spacing="10">
+                        <ActivityIndicator 
+                            Color="White"
+                            IsRunning="True"
+                            VerticalOptions="Center"
+                            HeightRequest="20"
+                            WidthRequest="20"></ActivityIndicator>
+                        <Label 
+                            Text="Loading..."
+                            FontSize="20"
+                            TextColor="White"
+                            VerticalTextAlignment="Center"
+                            FontFamily="LTSMRegular"></Label>
+                    </HorizontalStackLayout>
+                </Frame>
             </VerticalStackLayout>
         </Frame>
 

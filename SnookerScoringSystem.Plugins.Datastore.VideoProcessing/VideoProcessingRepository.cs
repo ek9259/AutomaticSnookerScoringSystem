@@ -9,26 +9,11 @@ namespace SnookerScoringSystem.Plugins.Datastore.VideoProcessing
     // All the code in this file is included in all platforms.
     public class VideoProcessingRepository :IVideoProcessingRepository
     {
-        private readonly VideoCapture _snookerVideo;
-        private readonly string _videoPath;
+        private VideoCapture _snookerVideo;
+        private string _videoPath;
 
         private CancellationTokenSource _cancellationTokenSource;
 
-        //Creating video capture object by passing the path to video
-        public VideoProcessingRepository()
-        {
-            try
-            {
-                // Get the path to the video file
-                _videoPath = GetVideoPath();
-                _snookerVideo = new VideoCapture(_videoPath);
-            }
-            catch (Exception ex)
-            {
-                throw new Exception($"An error occurred while accessing the video: {ex.Message}", ex);
-            }
-
-        }
 
         //Find the path to video file
         public string GetVideoPath()
@@ -41,7 +26,24 @@ namespace SnookerScoringSystem.Plugins.Datastore.VideoProcessing
             }
 
             return videoPath;
-    }
+        }
+
+        public async Task SetUpVideoCaptureAsync()
+        {
+            await Task.Run(() =>
+            {
+                try
+                {
+                    // Get the path to the video file
+                    _videoPath = GetVideoPath();
+                    _snookerVideo = new VideoCapture(_videoPath);
+                }
+                catch (Exception ex)
+                {
+                    throw new Exception($"An error occurred while accessing the video: {ex.Message}", ex);
+                } 
+            });
+        }
 
         //Extract frame function
         public async Task ExtractFrameAsync()

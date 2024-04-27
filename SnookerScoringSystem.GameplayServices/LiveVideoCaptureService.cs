@@ -1,4 +1,5 @@
-﻿using Emgu.CV;
+﻿using CommunityToolkit.Mvvm.ComponentModel;
+using Emgu.CV;
 using Emgu.CV.CvEnum;
 using SnookerScoringSystem.UseCases.PluginInterfaces;
 
@@ -12,16 +13,9 @@ namespace SnookerScoringSystem.GameplayServices
         
         private CancellationTokenSource? _cancellationTokenSource;
 
-        private string _appDataDirectory;
+        private string _appDataDirectory = FileSystem.Current.AppDataDirectory;
 
         private string _liveVideoCapturePath;
-
-        public LiveVideoCaptureService()
-        {
-            SettingUpVideoCapture();
-            // Get the AppData directory path
-            _appDataDirectory = FileSystem.Current.AppDataDirectory;
-        }
 
         public async Task ExtractFrameAsync()
         {
@@ -72,21 +66,24 @@ namespace SnookerScoringSystem.GameplayServices
             }); 
         }
 
-        private void SettingUpVideoCapture()
+        public async Task SetUpVideoCaptureAsync()
         {
-            try
+            await Task.Run(() =>
             {
-                if (_videoCapture == null)
+                try
                 {
-                    // Access video from camera
-                    this._videoCapture = new VideoCapture(0);
+                    if (_videoCapture == null)
+                    {
+                        // Access video from camera
+                        this._videoCapture = new VideoCapture(0);
+                    }
+                    _videoCapture.Start();
                 }
-                _videoCapture.Start();
-            }
-            catch (Exception ex)
-            {
-                throw new Exception($"An error occurred while accessing the camera: {ex.Message}", ex);
-            }
+                catch (Exception ex)
+                {
+                    throw new Exception($"An error occurred while accessing the camera: {ex.Message}", ex);
+                }
+            });
         }
 
         public string GetVideoPath()
@@ -107,7 +104,11 @@ namespace SnookerScoringSystem.GameplayServices
             {
                 _cancellationTokenSource.Cancel();
             }
-            this._videoCapture.Stop();
+
+            if (this._videoCapture != null)
+            {
+                this._videoCapture.Stop();
+            }
             this._videoCapture = null;
         }
     }
