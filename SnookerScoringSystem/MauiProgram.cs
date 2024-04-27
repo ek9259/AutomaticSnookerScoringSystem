@@ -58,6 +58,7 @@ namespace SnookerScoringSystem
             builder.Services.AddTransient<ICalculateScore, CalculateScore>();
 
             builder.Services.AddTransient<IGetVideoPathUseCase, GetVideoPathUseCase>();
+            builder.Services.AddTransient<ISetUpVideoCaptureUseCase, SetUpVideoCaptureUseCase>();
             builder.Services.AddTransient<IUpdatePlayerScoreUseCase, UpdatePlayerScoreUseCase>();
             builder.Services.AddTransient<IResetPlayerScoreUseCase, ResetPlayerScoreUseCase>();
             builder.Services.AddTransient<IStopExtractingFrameUseCase, StopExtractingFrameUseCase>();
