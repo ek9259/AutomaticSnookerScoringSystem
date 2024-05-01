@@ -78,7 +78,7 @@ namespace SnookerScoringSystem.ViewModels
 
             // Subscribe TimUpdated event to execute the UpdateFormmatedMatchTime to change the displaying match time
             this._timerService.TimeUpdated += UpdateFormattedMatchTime;
-            this._calculateScore = gameManager.StartNewGame(updatePlayerScoreUseCase);
+            this._calculateScore = gameManager.StartNewGame(updatePlayerScoreUseCase, getPlayerUseCase);
 
             // Reset the match time to zero before starting the game
             this._timerService.Reset();
@@ -102,6 +102,11 @@ namespace SnookerScoringSystem.ViewModels
                     await GoToNextPage();
                 });
             });
+
+            WeakReferenceMessenger.Default.Register<ScoringEventPopupMessage>(this, async (r, m) =>
+            {
+                await _popupNavigation.PushAsync(new EventPopupMessage(m.Value.Messages1, m.Value.ColoredText, m.Value.Messages2, m.Value.Classid));
+            });
         }
 
         // Update player object to be displayed be getting data from repository
@@ -109,7 +114,7 @@ namespace SnookerScoringSystem.ViewModels
         {
             var players = await _getPlayerUseCase.ExecuteAsync();
             Player1 = players[0];
-            Player2= players[1];
+            Player2 = players[1];
         }
 
         // When user  click the start button, start extracting frame, playing video and start timer
@@ -122,8 +127,6 @@ namespace SnookerScoringSystem.ViewModels
 
             FormattedMatchTime = this._timerService.FormattedMatchTime;
             this._timerService.Start();
-
-            await _popupNavigation.PushAsync(new EventPopupMessage());
 
             PlayVideo();
 

@@ -38,8 +38,14 @@
             FontFamily="LTSMRegular"
             Margin="10,10,10,10"
             FontSize="20"
-            TextColor="White"
-            Text="Player 1 has pocketed the red ball, earning 1 point(s)!">
+            TextColor="White">
+            <Label.FormattedText>
+                <FormattedString>
+                    <Span Text="{Binding Messages1}" FontSize="20"/>
+                    <Span Text="{Binding ColoredText}" FontSize="20" TextColor="{Binding BallColors}"/>
+                    <Span Text="{Binding Messages2}" FontSize="20"/>
+                </FormattedString>
+            </Label.FormattedText>
         </Label>
 
     </Border>

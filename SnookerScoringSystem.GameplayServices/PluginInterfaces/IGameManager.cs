@@ -5,6 +5,6 @@ namespace SnookerScoringSystem.GameplayServices.PluginInterfaces
 {
     public interface IGameManager
     {
-        ICalculateScore StartNewGame(IUpdatePlayerScoreUseCase updatePlayerScoreUseCase);
+        ICalculateScore StartNewGame(IUpdatePlayerScoreUseCase updatePlayerScoreUseCase, IGetPlayerUseCase getPlayerUseCase);
     }
 }
